@@ -7,9 +7,9 @@
 -[] think of useful predicates and how to implement them
 *)
 
-(* NOTE: The biggest diff for informal logic to formal logic is that
-informal logic is context based so its hard to formalize or even have
-multiple meaning. The attempt to formalize jokes is for entertainment solely. *)
+(* NOTE: The biggest difference for informal logic to formal logic is that
+informal logic is context based, and everything needs to be given an intrepretation
+manually,so its hard to formalize. This project is for entertainment only. *)
 
 (* NOTE(draft): Architecture for each joke should be like:
 Module joke_n.
@@ -116,6 +116,8 @@ Definition ambiguity_word : Set. Admitted.
 (* Predicate. Example: "ab" consists of "a" and "b" *)
 Definition consists_of : Set. Admitted.
 
+Parameter is : expr -> expr -> expr.
+
 (* TODO: think of a mechanic to destruct any words including predicates into list of characters *)
 
 (* ******************************** *)
@@ -130,7 +132,6 @@ https://en.wikipedia.org/wiki/Russian_political_jokes
 
 Module Joke_1.
   Module Predicates.
-    Parameter is : expr -> expr -> expr.
   End Predicates.
 
   Module Dialogue.
@@ -148,15 +149,20 @@ Module Joke_1.
     Definition d_2 := says "B" 
       (Follow
         (Answer "A" (Adj (Plain "communist") (Plain "hell")))
-        (Predicates.is 
-          (Adj (Plain "communist") (Plain "hell")) 
-          (Or (Plain "don't have fuel")
-            (Or (Plain "don't have enough pots for everyone")
-                (Plain "all devils are drunk"))))).
+        (is (Adj (Plain "communist") (Plain "hell")) 
+            (Or (Plain "don't have fuel")
+              (Or (Plain "don't have enough pots for everyone")
+                  (Plain "all devils are drunk"))))).
   End Dialogue.
 
   Module Assumptions.
-    Definition a_1 : Set. Admitted.
+    (* the description in sentence 2 means poor *)
+    Definition a_1 :=
+      (is (Plain "poor")
+        (is (Adj (Plain "communist") (Plain "hell")) 
+            (Or (Plain "don't have fuel")
+              (Or (Plain "don't have enough pots for everyone")
+                  (Plain "all devils are drunk"))))).
   End Assumptions.
 
   Module Joke_proof.
