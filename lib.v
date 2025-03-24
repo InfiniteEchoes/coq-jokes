@@ -70,8 +70,13 @@ Adjective. Parameter :
 - Plain as [| _ |]
 *)
 
-(* Predicate. Example: "ab" consists of "a" and "b" *)
-Parameter consists_of : Set.
+(* I'm thinking of generalizing the following predicate to a series of "actions" that people can act *)
+(* Predicate. Just to label that someone is saying a full sentence. Should be formed as the actual dialogue in the joke 
+parameters:
+- name of the person
+- the expression that he says
+*)
+Parameter says : string -> expr -> Set.
 
 (* Predicate. A and B confilcts, therefore this story is a joke
   Should take a proposition that resulted in false, and return true *)
@@ -88,13 +93,6 @@ parameters:
 *)
 Parameter means : Set -> Set -> Set.
 
-(* I'm thinking of generalizing the following predicate to a series of "actions" that people can act *)
-(* Predicate. Just to label that someone is saying a full sentence. Should be formed as the actual dialogue in the joke 
-parameters:
-- name of the person
-- the expression that he says
-*)
-Parameter says : string -> expr -> Set.
 
 (* Predicate. Some sentence makes an ambiguity under different interpretation.
 Parameter:
@@ -109,7 +107,10 @@ Parameter ambiguity_meanings (A : Set) (B C : Set): means A B -> means A C -> is
 *)
 Parameter ambiguity_word (A : Set) (B C : Set) : Set.
 
-(* TODO: think of an mechanic to destruct any words including predicates into list of characters *)
+(* Predicate. Example: "ab" consists of "a" and "b" *)
+Parameter consists_of : Set.
+
+(* TODO: think of a mechanic to destruct any words including predicates into list of characters *)
 
 (* ******************************** *)
 (* Jokes collected online and to be proved *)
