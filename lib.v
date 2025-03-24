@@ -37,16 +37,6 @@ Require Import Coq.Strings.String.
 
 (* Initial way to analyze the sentences *)
 Inductive expr :=
-(* Someone is asking a question. Parameter : 
-- the person to speak with
-- the content of the sentence *)
-(* TODO: move `ask` out of this struct and put it with `say` *)
-| Ask : String.string -> expr -> expr
-
-(* Someone is replying. Parameter : 
-- the person to reply with
-- the content of the sentence *)
-| Answer : string -> expr -> expr
 
 | And : expr -> expr -> expr
 | Or : expr -> expr -> expr
@@ -57,11 +47,6 @@ Adjective. Parameter :
 - the thing to describe with
 *)
 | Adj : expr -> expr -> expr
-
-(* Another sentence follows after this one. Similar to cons for lists.
-  Should I just change into normal cons instead?
-*)
-| Follow : expr -> expr -> expr
 
 | Plain : string -> expr
 .
@@ -74,19 +59,28 @@ Adjective. Parameter :
 *)
 
 Inductive sentence : Set :=
-| Ask : string -> string -> sentence
-| Answer : string -> string -> sentence
-| Say : string -> sentence
-.
+(* Someone is asking a question. Parameter : 
+- the person that speaks
+- the person to speak with
+- the content of the sentence *)
+| Ask : string -> string -> expr -> sentence
 
-(* I'm thinking of generalizing the following predicate to a series of "actions" that people can act *)
-(* Predicate. Just to label that someone is saying a full sentence. Should be formed as the actual dialogue in the joke 
-parameters:
+(* Someone is replying. Parameter : 
+- the person that speaks
+- the person to reply with
+- the content of the sentence *)
+| Answer : string -> string -> expr -> sentence
+
+(* Another sentence follows after this one. Similar to cons for lists.
+  Should I just change into normal cons instead? *)
+| Follow : sentence -> sentence -> sentence
+
+(* Someone is just saying something.
 - name of the person
 - the expression that he says
-*)
-Parameter says : string -> expr -> expr.
-(* TODO: make a new type for `says` and write a destructor for the type *)
+ *)
+| Say : string -> expr -> sentence
+.
 
 (* Predicate. A and B confilcts, therefore this story is a joke. *)
 Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
@@ -94,7 +88,7 @@ Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
 (* Predicate. If there's a joke in the dialogue, the whole dialogue should be a joke 
   TODO: redesign the parameters in the future
 *)
-Definition is_joke_dialogue (A : Prop) (dialogue : expr)
+Definition is_joke_dialogue (A : Prop) (dialogue : sentence)
   (* (s1 s2 : A) (joke : is_joke s1 s2)  *)
   : Prop. Admitted.
 
@@ -104,7 +98,7 @@ parameters:
 - original sentence or slice (undefined, not a clue)
 - the context to make the interpretation
 *)
-Definition means (A : Set) : A -> A -> expr. Admitted.
+Definition means (A : Set) : A -> A -> Prop. Admitted.
 
 (* Predicate. Some sentence makes an ambiguity under different interpretation.
 Parameter:
@@ -124,12 +118,14 @@ Definition ambiguity_word : Set. Admitted.
 (* ********Misc******** *)
 
 (* Predicate. Example: "ab" consists of "a" and "b" *)
-Definition consists_of : Set. Admitted.
+Parameter consists_of : Set.
 
 (* A predicate to show someone has said something in the sentence. Parameters:
 - the expression to contain
-- the whole expression *)
-Definition contains : expr -> expr -> Prop. Admitted.
+- the whole expression 
+Since it's too complicated to actually do the searching, I want to just leave it as a parameter
+*)
+Parameter contains : expr -> sentence -> Prop.
 
 (* TODO: theorem: If 
 - we have predicate P(A), and
@@ -137,7 +133,11 @@ Definition contains : expr -> expr -> Prop. Admitted.
 - then we should conclude a more general claim on that sentence from A
 *)
 
+(* NOTE that this is not a proposition for now *)
 Parameter is : expr -> expr -> expr.
+
+(* TODO: maybe implement this function *)
+Definition talker_of (d : sentence) : string. Admitted.
 
 Parameter has : expr -> Prop.
 
@@ -155,7 +155,12 @@ https://en.wikipedia.org/wiki/Russian_political_jokes
 
 Module Joke_1.
   Module Predicates.
-    Definition normal : string -> Prop. Admitted.
+    Definition is_poor (d : sentence) : Prop. Admitted.
+    Definition is_choosing (d : sentence) : Prop. Admitted.
+    Definition is_providing_reason (d : sentence) : Prop. Admitted.
+    (* Maybe this predicate can be expanded to contain more informations... *)
+    Definition is_answering (d : sentence) : Prop. Admitted.
+    Definition is_normal (p : string) : Prop. Admitted.
   End Predicates.
 
   Module Dialogue.
@@ -163,59 +168,59 @@ Module Joke_1.
     -- Would you choose a capitalist hell or a communist one?
     -- Of course, communist: they either don't have fuel, don't have enough pots for everyone or all devils are drunk.
     *)
-    (* TODO: a completed sentence should be defined with a definition *)
-    Definition d_1 := says "A" (Ask "B"
+    Definition d_1 := Ask "A" "B"
       (Or
         (Adj (Plain "capitalist") (Plain "hell"))
-        (Adj (Plain "communist") (Plain "hell")))).
+        (Adj (Plain "communist") (Plain "hell"))).
 
-    Definition d_2 := says "B" 
+    Definition d_2 := 
       (Follow
-        (Answer "A" (Adj (Plain "communist") (Plain "hell")))
-        (is (Adj (Plain "communist") (Plain "hell")) 
-            (Or (Plain "don't have fuel")
-              (Or (Plain "don't have enough pots for everyone")
-                  (Plain "all devils are drunk"))))).
+        (Answer "B" "A" (Adj (Plain "communist") (Plain "hell")))
+        (Say "B"
+          (is (Adj (Plain "communist") (Plain "hell")) 
+              (Or (Plain "don't have fuel")
+                (Or (Plain "don't have enough pots for everyone")
+                    (Plain "all devils are drunk")))))).
   End Dialogue.
 
   Module Assumptions.
-    (* "don't have fuel, don't have enough pots for everyone or all devils are drunk" means poor 
-    *)
-    Definition a_1 :=
-      (is (Plain "poor")
-          (Or (Plain "don't have fuel")
-            (Or (Plain "don't have enough pots for everyone")
-                (Plain "all devils are drunk")))).
 
-    (* TODO: if there's a "poor" relation for a sentence, that implies the sentence is making a choice 
-    TODO: maybe change the expr into a dialogue type
-    *)
-    Definition is_choice (sentence : expr): Prop. Admitted.
-    Definition a_2_poor_is_choice : Prop. Admitted.
-     (* :=
-      forall (sentence: expr) (stub : expr), 
-      contains (is (Plain "poor") stub) sentence -> is_choice sentence *)
+    (* "don't have fuel, don't have enough pots for everyone or all devils are drunk" means poor *)
+    Definition poor_description := (is (Plain "poor")
+    (Or (Plain "don't have fuel")
+      (Or (Plain "don't have enough pots for everyone")
+          (Plain "all devils are drunk")))).
 
-    (* TODO: Theorem: sentence d_2 contains the choice *)
+    (* (Ignore computation)Assume that d_2 contains something. we ignore the computations *)
+    Parameter d_2_contains_poor : contains poor_description Dialogue.d_2.
 
-    (* TODO: if a sentence is (contains) making a choice between two hells, it's providing a reason for d_1 *)
-    Definition is_reason : Prop. Admitted.
-    Definition a_3_choice_is_reason : Prop. Admitted.
+    (* (Ignore computation)Assume that d_2 contains an answer. We ignore the assumption 
+    that that answer contains the poor description for now... *)
+    Parameter d2_contains_answer : Prop. 
 
-    (* TODO: if a sentence is providing a reason and answering d_1, that sentence is a valid answer to d_1 *)
-
-    (* d_1's question is hard to answer with. If a sentence answers d_1 in confidence(valid), the person that replies
-       isn't normal 
-    TODO: redesign the `exprerssion` parameter
-    *)
-    (* Definition a_2 : Prop := forall (person : string) (expression : expr), 
-      ((contains (Answer "A" (Adj (Plain "capitalist") (Plain "hell"))) expression) \/
-      (contains (Answer "A" (Adj (Plain "communist") (Plain "hell"))) expression)) -> 
-      ~(Predicates.normal person). *)
-
-    (* Everyone should be normal person *)
-    (* Definition a_3 : Prop := forall (person : string), Predicates.normal person. *)
+    Parameter contains_poor_implies_is_poor : 
+    forall (d : sentence), contains poor_description d -> Predicates.is_poor d.
     
+    (* If there's a "poor" relation for a sentence, that implies the sentence is making a choice *)
+    Parameter is_poor_implies_is_choosing : 
+      forall (d : sentence), Predicates.is_poor d -> Predicates.is_choosing d.
+
+    (* If a sentence is making a choice between two hells, it's providing a reason for d_1 *)
+    Parameter is_choosing_implies_provide_reason :
+      forall (d : sentence), Predicates.is_choosing d -> Predicates.is_providing_reason d.
+
+    (* If a sentence is providing a reason and answering d_1, that sentence is a valid answer to d_1 *)
+    Parameter answer_with_choice_is_valid :
+      forall (d : sentence), Predicates.is_providing_reason d \/ d2_contains_answer
+        -> Predicates.is_answering d.
+
+    (* If someone provides a valid answer, that person isn't normal *)
+    Parameter valid_choice_is_nor_normal :
+      forall (d : sentence), Predicates.is_answering d -> ~Predicates.is_normal (talker_of d).
+    
+    (* Everyone should be normal person *)
+    Parameter everyone_is_normal :
+      forall (p : string), Predicates.is_normal p.
   End Assumptions.
 
   (* TODO: we might need to restate the reasonings more clearly!
