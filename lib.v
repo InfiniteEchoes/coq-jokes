@@ -35,29 +35,34 @@ End Joke_n.
 
 (* Some initial way to analyze the sentences *)
 Inductive expr :=
-(* Someone is asking a question *)
-(* Parameter : 
+(* Someone is asking a question. Parameter : 
 - the person to speak with
 - the content of the sentence *)
 | Ask : string -> expr -> expr
+
 (* Parameter : 
-- the person to speak with
+- the person to reply with
 - the content of the sentence *)
 | Answer : string -> expr -> expr
+
 | And : expr -> expr -> expr
 | Or : expr -> expr -> expr
+
 (* 
 Adjective. Parameter :
 - the adjective
 - the thing to describe with
 *)
 | Adj : expr -> expr -> expr
+
 (* Another sentence follows after this one. Similar to cons for lists.
   Should I just change into normal cons instead?
 *)
 | Follow : expr -> expr -> expr
+
 | Plain : string -> expr
 .
+
 (* TODO: set up notations for:
 - Ask as _ ?
 - Answer as _ !
