@@ -81,15 +81,15 @@ parameters:
 Parameter says : string -> expr -> expr.
 (* TODO: make a new type for `says` and write a destructor for the type *)
 
-(* Predicate. A and B confilcts, therefore this story is a joke
-  Should take a proposition that resulted in false, and return true 
-  TODO: see if a1 xor a2 is true
-  *)
-Definition is_joke (A : Set) : A -> A -> Set. Admitted.
+(* Predicate. A and B confilcts, therefore this story is a joke. *)
+Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
 
-(* Predicate. If there's a joke in the dialogue, the whole dialogue should be a joke *)
-Definition is_joke_dialogue (A : Set) (dialogue : A) 
-  (s1 s2 : A) (joke : is_joke A s1 s2) : Set. Admitted.
+(* Predicate. If there's a joke in the dialogue, the whole dialogue should be a joke 
+  TODO: redesign the parameters in the future
+*)
+Definition is_joke_dialogue (A : Prop) (dialogue : expr)
+  (* (s1 s2 : A) (joke : is_joke s1 s2)  *)
+  : Prop. Admitted.
 
 (* Predicate. Example: A under intrepretation A' means a' and A'' means a''. 
 They have different meaning resulted into a joke 
@@ -105,8 +105,8 @@ Parameter:
 - B, C: different contexts to interpret the sentence
 NOTE: did i define this predicate wrong?
 *)
-Definition ambiguity_meanings (T : Set) (A : T) (B C : T) : 
-  is_joke expr (means T A B) (means T A C). Admitted.
+(* Definition ambiguity_meanings (T : Set) (A : T) (B C : T) : 
+  is_joke expr (means T A B) (means T A C). Admitted. *)
 
 (* Predicate. For ambiguity on a single word 
 - A: the sentence to be interpreted
@@ -148,6 +148,7 @@ https://en.wikipedia.org/wiki/Russian_political_jokes
 
 Module Joke_1.
   Module Predicates.
+    Definition normal : string -> Prop. Admitted.
   End Predicates.
 
   Module Dialogue.
@@ -180,11 +181,14 @@ Module Joke_1.
             (Or (Plain "don't have enough pots for everyone")
                 (Plain "all devils are drunk")))).
     
-    (* All people wouldn't make a choice for d_1's question *)
+    (* If people make a choice for d_1's question, this person isn't normal *)
     Definition a_2 : Prop := forall (person : string) (expression : expr), 
-      ~ ((contains (Answer "A" (Adj (Plain "capitalist") (Plain "hell"))) expression) 
-        \/
-        (contains (Answer "A" (Adj (Plain "communist") (Plain "hell"))) expression)).
+      ((contains (Answer "A" (Adj (Plain "capitalist") (Plain "hell"))) expression) \/
+      (contains (Answer "A" (Adj (Plain "communist") (Plain "hell"))) expression)) -> 
+      ~(Predicates.normal person).
+
+    (* Everyone should be normal person *)
+    Definition a_3 : Prop := forall (person : string), Predicates.normal person.
     
   End Assumptions.
 
