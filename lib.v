@@ -20,18 +20,27 @@ Parameter consists_of : Set.
 Parameter is_joke : Set.
 
 (* Example: A under intrepretation A' means a' and A'' means a''. 
-  They have different meaning resulted into a joke *)
-Parameter means : Set.
+  They have different meaning resulted into a joke 
+  1st parameter : original sentence or slice
+  2nd parameter : the contexts to make the interpretation
+  *)
+Parameter means : Set -> Set -> Set.
+
+(* Theorem: idea being described above. B and C should be different context to make the ambiguity *)
+Parameter ambiguity_on_meanings (A : Set) (B C : Set): means A B -> means A C -> is_joke A.
 
 (* TODO: think of an mechanic to destruct any words including predicates into list of characters *)
 
 (* Wrapper for a single sentence. Words within it should be already formalized as an AST-like thing *)
 Parameter chat : [Set] -> Set.
 
+(* If there's a joke in the story, the whole story should be a joke *)
+Parameter is_joke_story (A : Set) (story : A) (proof : is_joke A) : is_joke story.
+
 (* For ambiguity on a single word *)
 Parameter ambiguity : Set.
 
-(* Something just to label that a sentence is totally unrelated to the joke. *)
+(* Something just to label that a sentence is totally unrelated to the joke. Could be useful? *)
 Parameter unrelated : Set.
 
 (* Draft: the architecture for each joke should be like:
