@@ -56,6 +56,7 @@ End joke_1.
 (* 
 https://www.reddit.com/r/AskARussian/comments/n4qj1m/any_good_soviet_jokes/ 
 https://www.johndclare.net/Russ12_Jokes.htm
+https://en.wikipedia.org/wiki/Russian_political_jokes
 *)
 
 (* 
