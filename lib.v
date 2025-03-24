@@ -125,7 +125,7 @@ Parameter consists_of : Set.
 - the whole expression 
 Since it's too complicated to actually do the searching, I want to just leave it as a parameter
 *)
-Parameter contains : expr -> sentence -> Prop.
+Parameter contains : expr -> expr -> Prop.
 
 (* TODO: theorem: If 
 - we have predicate P(A), and
@@ -136,10 +136,11 @@ Parameter contains : expr -> sentence -> Prop.
 (* NOTE that this is not a proposition for now *)
 Parameter is : expr -> expr -> expr.
 
-(* TODO: maybe implement this function *)
-Definition talker_of (d : sentence) : string. Admitted.
-
 Parameter has : expr -> Prop.
+
+(* TODO: These functions are too complicated to implement with... *)
+Definition talker_of (d : sentence) : string. Admitted.
+Definition expr_of (d : sentence) : expr. Admitted.
 
 (* TODO: think of a mechanic to destruct any words including predicates into list of characters *)
 
@@ -155,12 +156,13 @@ https://en.wikipedia.org/wiki/Russian_political_jokes
 
 Module Joke_1.
   Module Predicates.
-    Definition is_poor (d : sentence) : Prop. Admitted.
-    Definition is_choosing (d : sentence) : Prop. Admitted.
-    Definition is_providing_reason (d : sentence) : Prop. Admitted.
+    Parameter is_poor : sentence -> Prop.
+    Parameter is_answer : expr -> Prop.
+    Parameter is_choosing : sentence -> Prop.
+    Parameter is_providing_reason : sentence -> Prop.
     (* Maybe this predicate can be expanded to contain more informations... *)
-    Definition is_answering (d : sentence) : Prop. Admitted.
-    Definition is_normal (p : string) : Prop. Admitted.
+    Parameter is_answering : sentence -> Prop.
+    Parameter is_normal : string -> Prop.
   End Predicates.
 
   Module Dialogue.
@@ -184,7 +186,6 @@ Module Joke_1.
   End Dialogue.
 
   Module Assumptions.
-
     (* "don't have fuel, don't have enough pots for everyone or all devils are drunk" means poor *)
     Definition poor_description := (is (Plain "poor")
     (Or (Plain "don't have fuel")
@@ -192,14 +193,14 @@ Module Joke_1.
           (Plain "all devils are drunk")))).
 
     (* (Ignore computation)Assume that d_2 contains something. we ignore the computations *)
-    Parameter d_2_contains_poor : contains poor_description Dialogue.d_2.
+    Parameter d_2_contains_poor : contains poor_description (expr_of Dialogue.d_2).
 
-    (* (Ignore computation)Assume that d_2 contains an answer. We ignore the assumption 
-    that that answer contains the poor description for now... *)
-    Parameter d2_contains_answer : Prop. 
+    (* (Ignore computation)Assume that d_2 contains an answer. *)
+    Parameter d_2_is_answer : Predicates.is_answer (expr_of Dialogue.d_2).
 
     Parameter contains_poor_implies_is_poor : 
-    forall (d : sentence), contains poor_description d -> Predicates.is_poor d.
+      forall (d : sentence), contains poor_description (expr_of Dialogue.d_2) 
+        -> Predicates.is_poor d.
     
     (* If there's a "poor" relation for a sentence, that implies the sentence is making a choice *)
     Parameter is_poor_implies_is_choosing : 
@@ -211,7 +212,9 @@ Module Joke_1.
 
     (* If a sentence is providing a reason and answering d_1, that sentence is a valid answer to d_1 *)
     Parameter answer_with_choice_is_valid :
-      forall (d : sentence), Predicates.is_providing_reason d \/ d2_contains_answer
+      forall (d : sentence), Predicates.is_providing_reason d /\
+        Predicates.is_answer (expr_of d) /\
+        contains poor_description (expr_of d)
         -> Predicates.is_answering d.
 
     (* If someone provides a valid answer, that person isn't normal *)
