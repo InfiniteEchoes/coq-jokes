@@ -181,7 +181,9 @@ Module Joke_1.
             (Or (Plain "don't have enough pots for everyone")
                 (Plain "all devils are drunk")))).
     
-    (* If people make a choice for d_1's question, this person isn't normal *)
+    (* If people make a choice for d_1's question, this person isn't normal 
+    TODO: redesign the `exprerssion` parameter
+    *)
     Definition a_2 : Prop := forall (person : string) (expression : expr), 
       ((contains (Answer "A" (Adj (Plain "capitalist") (Plain "hell"))) expression) \/
       (contains (Answer "A" (Adj (Plain "communist") (Plain "hell"))) expression)) -> 
@@ -201,7 +203,7 @@ Module Joke_1.
   6. [5] if a person makes the choice, he isn't normal
   7. [4] person 2 made a choice, so he isn't normal
   8. [assumption on common sense] we usually assume that any ppl is normal
-  9. [6, 7] there exists a person in the chat being not normal. (actually he's mad)
+  9. [6, 7] there exists a person in the chat being not normal. (actually, he's mad)
   10. [9] 9 is the joke
   *)
   Module Joke_proof.
@@ -216,7 +218,10 @@ The other: what's so funny?
 The first one: i've just heard the most ridiculous anecdote of my life.
 The other: Care to share?
 The first: Can't, just gave a guy 15 years for it.
-TODO: I cannot even get the joke! ask gpt...
+General idea:
+- (A rules that)if someone tells a joke, he will be sent to prison
+- if A tells a joke, A will be sent to prison
+- A cannot tell the joke
 *)
 
 (* 
@@ -224,6 +229,11 @@ In the museum of Vasily Chapayev the guide shows the visitors a skeleton:
 "And here you can see the skeleton of Vasily Chapayev."
 "And what is this small skeleton next to him?"
 "That's Vasily Chapayev in his childhood."
+General idea:
+- one person could have only one skeleton
+- for exhibition and bluffing purpose, Vasily got 2x in the museum
+- Vasily isn't a "normal" person, hence the joke
+
 *)
 
 (* 
