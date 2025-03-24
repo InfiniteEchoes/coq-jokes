@@ -14,19 +14,19 @@ multiple meaning. The attempt to formalize jokes is for entertainment solely. *)
 (* NOTE(draft): Architecture for each joke should be like:
 Module joke_n.
   (* predicates appeared in the joke *)
-  Module predicates.
-  End predicates.
+  Module Predicates.
+  End Predicates.
 
   (* each proposition in this module should start with `says` *)
-  Module dialogue.
-  End dialogue.
+  Module Dialogue.
+  End Dialogue.
 
-  Module assumptions.
-  End assumptions.
+  Module Assumptions.
+  End Assumptions.
 
-  Module joke_proof.
-  End joke_proof.
-End joke_n.
+  Module Joke_proof.
+  End Joke_proof.
+End Joke_n.
 *)
 
 (* ******************************** *)
@@ -44,8 +44,14 @@ Inductive expr :=
 - the person to speak with
 - the content of the sentence *)
 | Answer : string -> expr -> expr
-| And : expr -> expr
-| Or : expr -> expr
+| And : expr -> expr -> expr
+| Or : expr -> expr -> expr
+(* 
+Adjective. Parameter :
+- the adjective
+- the thing to describe with
+*)
+| Adj : expr -> expr -> expr
 (* Another sentence follows after this one. Similar to cons for lists.
   Should I just change into normal cons instead?
 *)
@@ -110,12 +116,13 @@ https://www.johndclare.net/Russ12_Jokes.htm
 https://en.wikipedia.org/wiki/Russian_political_jokes
 *)
 
-Module joke_1.
+Module Joke_1.
 
-  Module predicates.
-  End predicates.
+  Module Predicates.
+    Parameter is : expr -> expr -> expr.
+  End Predicates.
 
-  Module dialogue.
+  Module Dialogue.
   (* NOTE: This looks like the easiest joke to fomalize! The joke here is about the poor finance situation for devils
   -- Would you choose a capitalist hell or a communist one?
   -- Of course, communist: they either don't have fuel, don't have enough pots for everyone or all devils are drunk.
@@ -123,27 +130,24 @@ Module joke_1.
   (* TODO: a completed sentence should be defined with a definition *)
   Parameter d_1 := says "A" (Ask "B"
       (Or
-        (Follow (Plain "capitalist") (Plain "hell"))
-        (Follow (Plain "communist") (Plain "hell")))).
+        (Adj (Plain "capitalist") (Plain "hell"))
+        (Adj (Plain "communist") (Plain "hell")))).
 
-  (* TODO: 
-  - define a `is` predicate 
-  - unfold the reasons *)
+  (* TODO: unfold the reasons *)
   Parameter d_2 := says "B" 
     (Follow
-      (Answer "A" (Follow (Plain "communist") (Plain "hell")))
-      (Follow 
-        (Plain "is") 
-          (Follow (Plain "communist") (Plain "hell"))
-          (Or (Plain "don't have fuel")
-           (Or (Plain "don't have enough pots for everyone"))
-           (Plain "all devils are drunk")))).
-  End dialogue.
+      (Answer "A" (Adj (Plain "communist") (Plain "hell")))
+      (Predicates.is 
+        (Adj (Plain "communist") (Plain "hell"))
+        (Or (Plain "don't have fuel")
+          (Or (Plain "don't have enough pots for everyone"))
+          (Plain "all devils are drunk"))).
+  End Dialogue.
 
-  Module assumptions.
-  End assumptions.
+  Module Assumptions.
+  End Assumptions.
 
-  Module joke_proof.
+  Module Joke_proof.
   (* 
   1. [assumption] we first assume that the description in sentence 2 means poor
   2. [sentence 2, 1] 2nd sentence shows that comm hell is poor
@@ -156,9 +160,8 @@ Module joke_1.
   9. [6, 7] there exists a person in the chat being not normal. (actually he's mad)
   10. [9] 9 is the joke
   *)
-  End joke_proof.
-
-End joke_1.
+  End Joke_proof.
+End Joke_1.
 
 (* 
 Two judges meet in a court and one is laughing hysterically.
