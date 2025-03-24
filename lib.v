@@ -40,6 +40,7 @@ Inductive expr :=
 (* Someone is asking a question. Parameter : 
 - the person to speak with
 - the content of the sentence *)
+(* TODO: move `ask` out of this struct and put it with `say` *)
 | Ask : String.string -> expr -> expr
 
 (* Someone is replying. Parameter : 
@@ -71,6 +72,12 @@ Adjective. Parameter :
 - Follow as _ ; _
 - Plain as [| _ |]
 *)
+
+Inductive sentence : Set :=
+| Ask : string -> string -> sentence
+| Answer : string -> string -> sentence
+| Say : string -> sentence
+.
 
 (* I'm thinking of generalizing the following predicate to a series of "actions" that people can act *)
 (* Predicate. Just to label that someone is saying a full sentence. Should be formed as the actual dialogue in the joke 
@@ -158,11 +165,10 @@ Module Joke_1.
     *)
     (* TODO: a completed sentence should be defined with a definition *)
     Definition d_1 := says "A" (Ask "B"
-        (Or
-          (Adj (Plain "capitalist") (Plain "hell"))
-          (Adj (Plain "communist") (Plain "hell")))).
+      (Or
+        (Adj (Plain "capitalist") (Plain "hell"))
+        (Adj (Plain "communist") (Plain "hell")))).
 
-    (* TODO: unfold the reasons *)
     Definition d_2 := says "B" 
       (Follow
         (Answer "A" (Adj (Plain "communist") (Plain "hell")))
@@ -180,21 +186,39 @@ Module Joke_1.
           (Or (Plain "don't have fuel")
             (Or (Plain "don't have enough pots for everyone")
                 (Plain "all devils are drunk")))).
-    
-    (* If people make a choice for d_1's question, this person isn't normal 
+
+    (* TODO: if there's a "poor" relation for a sentence, that implies the sentence is making a choice 
+    TODO: maybe change the expr into a dialogue type
+    *)
+    Definition is_choice (sentence : expr): Prop. Admitted.
+    Definition a_2_poor_is_choice : Prop. Admitted.
+     (* :=
+      forall (sentence: expr) (stub : expr), 
+      contains (is (Plain "poor") stub) sentence -> is_choice sentence *)
+
+    (* TODO: Theorem: sentence d_2 contains the choice *)
+
+    (* TODO: if a sentence is (contains) making a choice between two hells, it's providing a reason for d_1 *)
+    Definition is_reason : Prop. Admitted.
+    Definition a_3_choice_is_reason : Prop. Admitted.
+
+    (* TODO: if a sentence is providing a reason and answering d_1, that sentence is a valid answer to d_1 *)
+
+    (* d_1's question is hard to answer with. If a sentence answers d_1 in confidence(valid), the person that replies
+       isn't normal 
     TODO: redesign the `exprerssion` parameter
     *)
-    Definition a_2 : Prop := forall (person : string) (expression : expr), 
+    (* Definition a_2 : Prop := forall (person : string) (expression : expr), 
       ((contains (Answer "A" (Adj (Plain "capitalist") (Plain "hell"))) expression) \/
       (contains (Answer "A" (Adj (Plain "communist") (Plain "hell"))) expression)) -> 
-      ~(Predicates.normal person).
+      ~(Predicates.normal person). *)
 
     (* Everyone should be normal person *)
-    Definition a_3 : Prop := forall (person : string), Predicates.normal person.
+    (* Definition a_3 : Prop := forall (person : string), Predicates.normal person. *)
     
   End Assumptions.
 
-  (* 
+  (* TODO: we might need to restate the reasonings more clearly!
   1. [assumption] we first assume that the description in sentence 2 means poor
   2. [sentence 2, 1] 2nd sentence shows that comm hell is poor
   3. [sentence 1] 1st sentence is asking for a choice (how to formalize this?)
@@ -249,7 +273,7 @@ Brezhnev asks: Who do you think will be after me?
 Andropov: I think, I will be.
 B: But will the people follow you?
 A: If they won't, they'll follow you!
-TODO: give an exact explanation to this joke
+NOTE: the difficulty here is to state what the 2nd sentence from Andropov claims
 *)
 
 (* 
@@ -260,4 +284,5 @@ Russian and American go to hell. Satan approaches them, says:
 – Why do I have another bucket of shit? – says the American, chooses the American hell.
 – Well, I lived in Russia, into the Russian hell and I will go, what is it, – says the Russian, chooses the Russian hell.
 They meet somehow after a while. Russian asks an American: – Well, how are you in hell? – Yes, good. I ate one bucket and walk all day. And you? – Yes, as usual: there are not enough buckets for all, then they will bring little shit.
+NOTE: More complicated implications than the 1st joke...
 *)
