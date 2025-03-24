@@ -2,9 +2,9 @@
 (* Project setups, general notes and etc *)
 (* ******************************** *)
 (* TODO:
-- formally create a coq project in this folder
-- maybe set up a CI on git
-- think of useful predicates and how to implement them
+-[] formally create a coq project in this folder
+-[] maybe set up a CI on git
+-[] think of useful predicates and how to implement them
 *)
 
 (* NOTE: The biggest diff for informal logic to formal logic is that
@@ -29,6 +29,8 @@ Module joke_n.
 End Joke_n.
 *)
 
+Require Import Coq.Strings.String.
+
 (* ******************************** *)
 (* General predicates, theorems, tools *)
 (* ******************************** *)
@@ -38,7 +40,7 @@ Inductive expr :=
 (* Someone is asking a question. Parameter : 
 - the person to speak with
 - the content of the sentence *)
-| Ask : string -> expr -> expr
+| Ask : String.string -> expr -> expr
 
 (* Parameter : 
 - the person to reply with
@@ -79,36 +81,40 @@ parameters:
 Parameter says : string -> expr -> Set.
 
 (* Predicate. A and B confilcts, therefore this story is a joke
-  Should take a proposition that resulted in false, and return true *)
-Parameter is_joke : Set.
+  Should take a proposition that resulted in false, and return true 
+  TODO: see if a1 xor a2 is true
+  *)
+Definition is_joke (A : Set) : A -> A -> Set. Admitted.
 
 (* Predicate. If there's a joke in the dialogue, the whole dialogue should be a joke *)
-Parameter is_joke_dialogue (A : Set) (dialogue : A) (proof : is_joke A) : is_joke dialogue.
+Definition is_joke_dialogue (A : Set) (dialogue : A) 
+  (s1 s2 : A) (joke : is_joke A s1 s2) : Set. Admitted.
 
 (* Predicate. Example: A under intrepretation A' means a' and A'' means a''. 
 They have different meaning resulted into a joke 
 parameters:
-- original sentence or slice
-- the contexts to make the interpretation
+- original sentence or slice (undefined, not a clue)
+- the context to make the interpretation
 *)
-Parameter means : Set -> Set -> Set.
-
+Definition means (A : Set) : A -> A -> expr. Admitted.
 
 (* Predicate. Some sentence makes an ambiguity under different interpretation.
 Parameter:
 - A: the sentence to be interpreted
 - B, C: different contexts to interpret the sentence
+NOTE: did i define this predicate wrong?
 *)
-Parameter ambiguity_meanings (A : Set) (B C : Set): means A B -> means A C -> is_joke A.
+Definition ambiguity_meanings (T : Set) (A : T) (B C : T) : 
+  is_joke expr (means T A B) (means T A C). Admitted.
 
 (* Predicate. For ambiguity on a single word 
 - A: the sentence to be interpreted
 - B, C: different contexts to interpret the sentence
 *)
-Parameter ambiguity_word (A : Set) (B C : Set) : Set.
+Definition ambiguity_word : Set. Admitted.
 
 (* Predicate. Example: "ab" consists of "a" and "b" *)
-Parameter consists_of : Set.
+Definition consists_of : Set. Admitted.
 
 (* TODO: think of a mechanic to destruct any words including predicates into list of characters *)
 
@@ -123,34 +129,34 @@ https://en.wikipedia.org/wiki/Russian_political_jokes
 *)
 
 Module Joke_1.
-
   Module Predicates.
     Parameter is : expr -> expr -> expr.
   End Predicates.
 
   Module Dialogue.
-  (* NOTE: This looks like the easiest joke to fomalize! The joke here is about the poor finance situation for devils
-  -- Would you choose a capitalist hell or a communist one?
-  -- Of course, communist: they either don't have fuel, don't have enough pots for everyone or all devils are drunk.
-  *)
-  (* TODO: a completed sentence should be defined with a definition *)
-  Parameter d_1 := says "A" (Ask "B"
-      (Or
-        (Adj (Plain "capitalist") (Plain "hell"))
-        (Adj (Plain "communist") (Plain "hell")))).
+    (* NOTE: This looks like the easiest joke to fomalize! The joke here is about the poor finance situation for devils
+    -- Would you choose a capitalist hell or a communist one?
+    -- Of course, communist: they either don't have fuel, don't have enough pots for everyone or all devils are drunk.
+    *)
+    (* TODO: a completed sentence should be defined with a definition *)
+    Definition d_1 := says "A" (Ask "B"
+        (Or
+          (Adj (Plain "capitalist") (Plain "hell"))
+          (Adj (Plain "communist") (Plain "hell")))).
 
-  (* TODO: unfold the reasons *)
-  Parameter d_2 := says "B" 
-    (Follow
-      (Answer "A" (Adj (Plain "communist") (Plain "hell")))
-      (Predicates.is 
-        (Adj (Plain "communist") (Plain "hell"))
-        (Or (Plain "don't have fuel")
-          (Or (Plain "don't have enough pots for everyone"))
-          (Plain "all devils are drunk"))).
+    (* TODO: unfold the reasons *)
+    Definition d_2 := says "B" 
+      (Follow
+        (Answer "A" (Adj (Plain "communist") (Plain "hell")))
+        (Predicates.is 
+          (Adj (Plain "communist") (Plain "hell")) 
+          (Or (Plain "don't have fuel")
+            (Or (Plain "don't have enough pots for everyone")
+                (Plain "all devils are drunk"))))).
   End Dialogue.
 
   Module Assumptions.
+    Definition a_1 : Set. Admitted.
   End Assumptions.
 
   Module Joke_proof.
