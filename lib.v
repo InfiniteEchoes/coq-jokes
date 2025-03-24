@@ -154,7 +154,7 @@ Module Joke_1.
     Parameter is_choosing : sentence -> Prop.
     Parameter is_providing_reason : sentence -> Prop.
     (* Maybe this predicate can be expanded to contain more informations... *)
-    Parameter is_answering : sentence -> Prop.
+    Parameter unexpected_answer : sentence -> Prop.
     Parameter is_normal : string -> Prop.
   End Predicates.
 
@@ -210,11 +210,11 @@ Module Joke_1.
       forall (d : sentence), Predicates.is_providing_reason d /\
         Predicates.is_answer (expr_of d) /\
         contains poor_description (expr_of d)
-        -> Predicates.is_answering d.
+        -> Predicates.unexpected_answer d.
 
     (* If someone provides a valid answer, that person isn't normal *)
     Parameter valid_choice_is_nor_normal :
-      forall (d : sentence), Predicates.is_answering d -> ~Predicates.is_normal (talker_of d).
+      forall (d : sentence), Predicates.unexpected_answer d -> ~Predicates.is_normal (talker_of d).
     
     (* Everyone should be normal person *)
     Parameter everyone_is_normal :
