@@ -8,58 +8,7 @@
 informal logic is context based so its hard to formalize or even have
 multiple meaning. The attempt to formalize jokes is for entertainment solely. *)
 
-(* ******************************** *)
-(* Initial draft for predicates *)
-(* ******************************** *)
-
-(* Example: "ab" consists of "a" and "b" *)
-Parameter consists_of : Set.
-
-(* Example: A and B confilcts, therefore this story is a joke
-  Should take a proposition that resulted in false, and return true *)
-Parameter is_joke : Set.
-
-(* Example: A under intrepretation A' means a' and A'' means a''. 
-They have different meaning resulted into a joke 
-parameters:
-- original sentence or slice
-- the contexts to make the interpretation
-*)
-Parameter means : Set -> Set -> Set.
-
-(* Theorem: idea being described above. B and C should be different context to make the ambiguity *)
-Parameter ambiguity_on_meanings (A : Set) (B C : Set): means A B -> means A C -> is_joke A.
-
-(* TODO: think of an mechanic to destruct any words including predicates into list of characters *)
-
-(* If there's a joke in the dialogue, the whole dialogue should be a joke *)
-Parameter is_joke_dialogue (A : Set) (dialogue : A) (proof : is_joke A) : is_joke dialogue.
-
-(* For ambiguity on a single word *)
-Parameter ambiguity : Set.
-
-(* Something just to label that a sentence is totally unrelated to the joke. Could be useful? *)
-Parameter unrelated : Set.
-
-(* DRAFT: some initial way to analyze the sentences *)
-Inductive expr :=
-(* Someone is asking a question *)
-| Ask : Set (* TODO: from person x to person y *)-> expr -> expr
-| Answer : Set -> expr -> expr
-| And : expr -> expr
-| Or : expr -> expr
-| Plain : Set (* Plain text. Should be string? *)-> expr
-.
-
-(* I'm thinking of generalizing the following predicate to a series of "actions" that people can act *)
-(* Just to label that someone is saying a full sentence. Should be formed as the actual dialogue in the joke 
-parameters:
-- name of the person
-- the expression that he says
-*)
-Parameter says : string -> expr -> Set.
-
-(* Draft: the architecture for each joke should be like:
+(* NOTE(draft): the architecture for each joke should be like:
 Module joke_1.
   (* predicates appeared in the joke *)
   Module predicates.
@@ -77,9 +26,74 @@ Module joke_1.
 End joke_1.
 *)
 
+(* ******************************** *)
+(* Predicates, theorems, tools *)
+(* ******************************** *)
+
+(* Some initial way to analyze the sentences *)
+Inductive expr :=
+(* Someone is asking a question *)
+(* Parameter : 
+- the person to speak with
+- the content of the sentence *)
+| Ask : string -> expr -> expr
+(* Parameter : 
+- the person to speak with
+- the content of the sentence *)
+| Answer : string -> expr -> expr
+| And : expr -> expr
+| Or : expr -> expr
+(* Another sentence follows after this one. Similar to cons for lists.
+  Should I just change into normal cons instead?
+*)
+| Follow : expr -> expr -> expr
+| Plain : string -> expr (* Mostly for stub and debugging use *)
+.
+(* TODO: set up notations *)
+
+(* Example: "ab" consists of "a" and "b" *)
+Parameter consists_of : Set.
+
+(* Example: A and B confilcts, therefore this story is a joke
+  Should take a proposition that resulted in false, and return true *)
+Parameter is_joke : Set.
+
+(* If there's a joke in the dialogue, the whole dialogue should be a joke *)
+Parameter is_joke_dialogue (A : Set) (dialogue : A) (proof : is_joke A) : is_joke dialogue.
+
+(* Example: A under intrepretation A' means a' and A'' means a''. 
+They have different meaning resulted into a joke 
+parameters:
+- original sentence or slice
+- the contexts to make the interpretation
+*)
+Parameter means : Set -> Set -> Set.
+
+(* I'm thinking of generalizing the following predicate to a series of "actions" that people can act *)
+(* Just to label that someone is saying a full sentence. Should be formed as the actual dialogue in the joke 
+parameters:
+- name of the person
+- the expression that he says
+*)
+Parameter says : string -> expr -> Set.
+
+(* Theorem. Some sentence makes an ambiguity under different interpretation.
+Parameter:
+- A: the sentence to be interpreted
+- B, C: different contexts to interpret the sentence
+*)
+Parameter ambiguity_meanings (A : Set) (B C : Set): means A B -> means A C -> is_joke A.
+
+(* Theorem. For ambiguity on a single word 
+- A: the sentence to be interpreted
+- B, C: different contexts to interpret the sentence
+*)
+Parameter ambiguity_word (A : Set) (B C : Set) : Set.
+
+(* TODO: think of an mechanic to destruct any words including predicates into list of characters *)
 
 (* ******************************** *)
-(* Draft: jokes to formalize and prove below *)
+(* Jokes collected online and to be proved *)
 (* ******************************** *)
 
 (* 
@@ -88,23 +102,54 @@ https://www.johndclare.net/Russ12_Jokes.htm
 https://en.wikipedia.org/wiki/Russian_political_jokes
 *)
 
-(* NOTE: this looks like the easiest joke to fomalize! The joke here is about the poor finance situation for devils
--- Would you choose a capitalist hell or a communist one?
--- Of course, communist: they either don't have fuel, don't have enough pots for everyone or all devils are drunk.
-*)
 Module joke_1.
-(* NOTE: the reasonings is formed as follows:
-1. [assumption] we first assume that the description in sentence 2 means poor
-2. [sentence 2, 1] 2nd sentence shows that comm hell is poor
-3. [sentence 1] 1st sentence is asking for a choice (how to formalize this?)
-4. [sentence 2, sentence 1] 2nd sentence is making a choice to answer sentence 1
-5. [sentence 1, assumption on common sense] normally ppl won't think of a reason to make the choice
-6. [5] if a person makes the choice, he isn't normal
-7. [4] person 2 made a choice, so he isn't normal
-8. [assumption on common sense] we usually assume that any ppl is normal
-9. [6, 7] there exists a person in the chat being not normal. (actually he's mad)
-10. [9] 9 is the joke
-*)
+
+  Module predicates.
+  End predicates.
+
+  Module dialogue.
+  (* NOTE: This looks like the easiest joke to fomalize! The joke here is about the poor finance situation for devils
+  -- Would you choose a capitalist hell or a communist one?
+  -- Of course, communist: they either don't have fuel, don't have enough pots for everyone or all devils are drunk.
+  *)
+  (* TODO: a completed sentence should be defined with a definition *)
+  Parameter d_1 := says "A" (Ask "B"
+      (Or
+        (Follow (Plain "capitalist") (Plain "hell"))
+        (Follow (Plain "communist") (Plain "hell")))).
+
+  (* TODO: 
+  - define a `is` predicate 
+  - unfold the reasons *)
+  Parameter d_2 := says "B" 
+    (Follow
+      (Answer "A" (Follow (Plain "communist") (Plain "hell")))
+      (Follow 
+        (Plain "is") 
+          (Follow (Plain "communist") (Plain "hell"))
+          (Or (Plain "don't have fuel")
+           (Or (Plain "don't have enough pots for everyone"))
+           (Plain "all devils are drunk")))).
+  End dialogue.
+
+  Module assumptions.
+  End assumptions.
+
+  Module joke_proof.
+  (* 
+  1. [assumption] we first assume that the description in sentence 2 means poor
+  2. [sentence 2, 1] 2nd sentence shows that comm hell is poor
+  3. [sentence 1] 1st sentence is asking for a choice (how to formalize this?)
+  4. [sentence 2, sentence 1] 2nd sentence is making a choice to answer sentence 1
+  5. [sentence 1, assumption on common sense] normally ppl won't think of a reason to make the choice
+  6. [5] if a person makes the choice, he isn't normal
+  7. [4] person 2 made a choice, so he isn't normal
+  8. [assumption on common sense] we usually assume that any ppl is normal
+  9. [6, 7] there exists a person in the chat being not normal. (actually he's mad)
+  10. [9] 9 is the joke
+  *)
+  End joke_proof.
+
 End joke_1.
 
 (* 
