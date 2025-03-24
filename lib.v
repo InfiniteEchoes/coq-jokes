@@ -31,9 +31,6 @@ Parameter ambiguity_on_meanings (A : Set) (B C : Set): means A B -> means A C ->
 
 (* TODO: think of an mechanic to destruct any words including predicates into list of characters *)
 
-(* Wrapper for a single sentence. Words within it should be already formalized as an AST-like thing *)
-Parameter chat : [Set] -> Set.
-
 (* If there's a joke in the story, the whole story should be a joke *)
 Parameter is_joke_story (A : Set) (story : A) (proof : is_joke A) : is_joke story.
 
@@ -50,16 +47,29 @@ Inductive expr :=
 | Answer : Set -> expr -> expr
 | And : expr -> expr
 | Or : expr -> expr
-| Plain : Set (* Should be string? *)-> expr
+| Plain : Set (* Plain text. Should be string? *)-> expr
 .
+
+(* I'm thinking of generalizing the following predicate to a series of "actions" that people can act *)
+(* someone says a full sentence. This should be formed as the actual dialogue in the joke 
+parameter:
+- name of the person
+- the expression that he says
+*)
+Parameter says : string -> expr -> Set.
 
 (* Draft: the architecture for each joke should be like:
 Module joke_1.
-  Module context.
-  End context.
+  (* predicates appeared in the joke *)
+  Module predicates.
+  End predicates.
 
-  Module sentences.
-  End sentences.
+  (* each proposition in this module should start with `says` *)
+  Module dialogue.
+  End dialogue.
+
+  Module assumptions.
+  End assumptions.
 
   Module joke_proof.
   End joke_proof.
