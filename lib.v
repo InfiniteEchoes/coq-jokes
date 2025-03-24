@@ -31,8 +31,8 @@ Parameter ambiguity_on_meanings (A : Set) (B C : Set): means A B -> means A C ->
 
 (* TODO: think of an mechanic to destruct any words including predicates into list of characters *)
 
-(* If there's a joke in the story, the whole story should be a joke *)
-Parameter is_joke_story (A : Set) (story : A) (proof : is_joke A) : is_joke story.
+(* If there's a joke in the dialogue, the whole dialogue should be a joke *)
+Parameter is_joke_dialogue (A : Set) (dialogue : A) (proof : is_joke A) : is_joke dialogue.
 
 (* For ambiguity on a single word *)
 Parameter ambiguity : Set.
