@@ -20,10 +20,11 @@ Parameter consists_of : Set.
 Parameter is_joke : Set.
 
 (* Example: A under intrepretation A' means a' and A'' means a''. 
-  They have different meaning resulted into a joke 
-  1st parameter : original sentence or slice
-  2nd parameter : the contexts to make the interpretation
-  *)
+They have different meaning resulted into a joke 
+parameters:
+- original sentence or slice
+- the contexts to make the interpretation
+*)
 Parameter means : Set -> Set -> Set.
 
 (* Theorem: idea being described above. B and C should be different context to make the ambiguity *)
@@ -51,8 +52,8 @@ Inductive expr :=
 .
 
 (* I'm thinking of generalizing the following predicate to a series of "actions" that people can act *)
-(* someone says a full sentence. This should be formed as the actual dialogue in the joke 
-parameter:
+(* Just to label that someone is saying a full sentence. Should be formed as the actual dialogue in the joke 
+parameters:
 - name of the person
 - the expression that he says
 *)
