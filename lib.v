@@ -236,11 +236,21 @@ Module Joke_1.
   Module Joke_proof.
     (* TODO: prove that someone isn't normal *)
     Theorem someone_is_not_normal :
-      exists (p : string), ~Predicates.is_normal p. Admitted.
+      exists (p : string), ~Predicates.is_normal p. 
+    Proof.
+    Admitted.
 
+    
     (* TODO: prove that this whole dialogue is a soviet joke *)
-    Theorem there_is_a_joke {A : Prop} :
-      exists (a : A) (neg_a : ~A), is_joke a neg_a. Admitted.
+    Theorem there_is_a_joke :
+      exists (A : Prop) (a : A) (neg_a : ~A), is_joke a neg_a.
+    Proof.
+    exists (forall (p : string), Predicates.is_normal p).
+    exists Assumptions.everyone_is_normal.
+    assert neg_assumption : (~forall (p : string), Predicates.is_normal p).
+    - exists someone_is_not_normal. (* TODO: apply the conversion *)
+    exists neg_assumption.
+    Qed.
   End Joke_proof.
 End Joke_1.
 
