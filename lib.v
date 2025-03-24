@@ -17,7 +17,6 @@ Module joke_n.
   Module Predicates.
   End Predicates.
 
-  (* each proposition in this module should start with `says` *)
   Module Dialogue.
   End Dialogue.
 
@@ -35,9 +34,8 @@ Require Import Coq.Strings.String.
 (* General predicates, theorems, tools *)
 (* ******************************** *)
 
-(* Initial way to analyze the sentences *)
+(* Initial way to analyze the expressions *)
 Inductive expr :=
-
 | And : expr -> expr -> expr
 | Or : expr -> expr -> expr
 
@@ -58,6 +56,7 @@ Adjective. Parameter :
 - Plain as [| _ |]
 *)
 
+(* Sentence here is expressions plus the action that someone speaks this expression *)
 Inductive sentence : Set :=
 (* Someone is asking a question. Parameter : 
 - the person that speaks
@@ -238,8 +237,8 @@ Module Joke_1.
     Theorem someone_is_not_normal :
       exists (p : string), ~Predicates.is_normal p. 
     Proof.
+      (* exists "B". *)
     Admitted.
-
     
     (* TODO: prove that this whole dialogue is a soviet joke *)
     Theorem there_is_a_joke :
@@ -247,10 +246,12 @@ Module Joke_1.
     Proof.
     exists (forall (p : string), Predicates.is_normal p).
     exists Assumptions.everyone_is_normal.
-    assert neg_assumption : (~forall (p : string), Predicates.is_normal p).
-    - exists someone_is_not_normal. (* TODO: apply the conversion *)
-    exists neg_assumption.
-    Qed.
+    (* assert neg_assumption : (~forall (p : string), Predicates.is_normal p). *)
+    (* TODO: apply the conversion *)
+    (* - exists someone_is_not_normal.  *)
+    (* exists neg_assumption. *)
+    Admitted.
+    (* Qed. *)
   End Joke_proof.
 End Joke_1.
 
@@ -261,9 +262,12 @@ The first one: i've just heard the most ridiculous anecdote of my life.
 The other: Care to share?
 The first: Can't, just gave a guy 15 years for it.
 General idea:
-- (A rules that)if someone tells a joke, he will be sent to prison
-- if A tells a joke, A will be sent to prison
-- A cannot tell the joke
+- [assumption]judge makes rules
+- [assumption]if judge sent someone to jail for a reason, the reason with 
+  the punishment constitutes to a rule
+- Judge has made a rule that if someone tells a joke, he will be sent to prison
+- If judge tells a joke, he will be sent to prison
+- Judge cannot tell the joke
 *)
 
 (* 
@@ -274,7 +278,8 @@ In the museum of Vasily Chapayev the guide shows the visitors a skeleton:
 General idea:
 - one person could have only one skeleton
 - for exhibition and bluffing purpose, Vasily got 2x in the museum
-- Vasily isn't a "normal" person, hence the joke
+- Museum has done wrong on Vasily
+- Museum being abnormal, hence the joke
 
 *)
 
