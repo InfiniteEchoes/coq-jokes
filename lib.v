@@ -83,14 +83,7 @@ Inductive sentence : Set :=
 .
 
 (* Predicate. A and B confilcts, therefore this story is a joke. *)
-Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
-
-(* Predicate. If there's a joke in the dialogue, the whole dialogue should be a joke 
-  TODO: redesign the parameters in the future
-*)
-Definition is_joke_dialogue (A : Prop) (dialogue : sentence)
-  (* (s1 s2 : A) (joke : is_joke s1 s2)  *)
-  : Prop. Admitted.
+Definition is_joke {A : Prop} : A -> ~A -> Prop. Admitted.
 
 (* Predicate. Example: A under intrepretation A' means a' and A'' means a''. 
 They have different meaning resulted into a joke 
@@ -210,7 +203,9 @@ Module Joke_1.
     Parameter is_choosing_implies_provide_reason :
       forall (d : sentence), Predicates.is_choosing d -> Predicates.is_providing_reason d.
 
-    (* If a sentence is providing a reason and answering d_1, that sentence is a valid answer to d_1 *)
+    (* If a sentence is providing a reason and answering d_1, that sentence is a valid answer to d_1 
+    NOTE: too complicated to design!... We ignore that it's answering d_1
+    *)
     Parameter answer_with_choice_is_valid :
       forall (d : sentence), Predicates.is_providing_reason d /\
         Predicates.is_answer (expr_of d) /\
@@ -239,8 +234,13 @@ Module Joke_1.
   10. [9] 9 is the joke
   *)
   Module Joke_proof.
-    (* TODO: what should the proposition be like? *)
-    (* TODO: write small tests below *)
+    (* TODO: prove that someone isn't normal *)
+    Theorem someone_is_not_normal :
+      exists (p : string), ~Predicates.is_normal p. Admitted.
+
+    (* TODO: prove that this whole dialogue is a soviet joke *)
+    Theorem there_is_a_joke {A : Prop} :
+      exists (a : A) (neg_a : ~A), is_joke a neg_a. Admitted.
   End Joke_proof.
 End Joke_1.
 
