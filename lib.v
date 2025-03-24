@@ -1,15 +1,18 @@
+(* ******************************** *)
+(* Project setups, general notes and etc *)
+(* ******************************** *)
 (* TODO:
 - formally create a coq project in this folder
 - maybe set up a CI on git
 - think of useful predicates and how to implement them
 *)
 
-(* NOTE: the biggest diff for informal logic to formal logic is that
+(* NOTE: The biggest diff for informal logic to formal logic is that
 informal logic is context based so its hard to formalize or even have
 multiple meaning. The attempt to formalize jokes is for entertainment solely. *)
 
-(* NOTE(draft): the architecture for each joke should be like:
-Module joke_1.
+(* NOTE(draft): Architecture for each joke should be like:
+Module joke_n.
   (* predicates appeared in the joke *)
   Module predicates.
   End predicates.
@@ -23,11 +26,11 @@ Module joke_1.
 
   Module joke_proof.
   End joke_proof.
-End joke_1.
+End joke_n.
 *)
 
 (* ******************************** *)
-(* Predicates, theorems, tools *)
+(* General predicates, theorems, tools *)
 (* ******************************** *)
 
 (* Some initial way to analyze the sentences *)
@@ -47,21 +50,26 @@ Inductive expr :=
   Should I just change into normal cons instead?
 *)
 | Follow : expr -> expr -> expr
-| Plain : string -> expr (* Mostly for stub and debugging use *)
+| Plain : string -> expr
 .
-(* TODO: set up notations *)
+(* TODO: set up notations for:
+- Ask as _ ?
+- Answer as _ !
+- Follow as _ ; _
+- Plain as [| _ |]
+*)
 
-(* Example: "ab" consists of "a" and "b" *)
+(* Predicate. Example: "ab" consists of "a" and "b" *)
 Parameter consists_of : Set.
 
-(* Example: A and B confilcts, therefore this story is a joke
+(* Predicate. A and B confilcts, therefore this story is a joke
   Should take a proposition that resulted in false, and return true *)
 Parameter is_joke : Set.
 
-(* If there's a joke in the dialogue, the whole dialogue should be a joke *)
+(* Predicate. If there's a joke in the dialogue, the whole dialogue should be a joke *)
 Parameter is_joke_dialogue (A : Set) (dialogue : A) (proof : is_joke A) : is_joke dialogue.
 
-(* Example: A under intrepretation A' means a' and A'' means a''. 
+(* Predicate. Example: A under intrepretation A' means a' and A'' means a''. 
 They have different meaning resulted into a joke 
 parameters:
 - original sentence or slice
@@ -70,21 +78,21 @@ parameters:
 Parameter means : Set -> Set -> Set.
 
 (* I'm thinking of generalizing the following predicate to a series of "actions" that people can act *)
-(* Just to label that someone is saying a full sentence. Should be formed as the actual dialogue in the joke 
+(* Predicate. Just to label that someone is saying a full sentence. Should be formed as the actual dialogue in the joke 
 parameters:
 - name of the person
 - the expression that he says
 *)
 Parameter says : string -> expr -> Set.
 
-(* Theorem. Some sentence makes an ambiguity under different interpretation.
+(* Predicate. Some sentence makes an ambiguity under different interpretation.
 Parameter:
 - A: the sentence to be interpreted
 - B, C: different contexts to interpret the sentence
 *)
 Parameter ambiguity_meanings (A : Set) (B C : Set): means A B -> means A C -> is_joke A.
 
-(* Theorem. For ambiguity on a single word 
+(* Predicate. For ambiguity on a single word 
 - A: the sentence to be interpreted
 - B, C: different contexts to interpret the sentence
 *)
