@@ -68,11 +68,24 @@ https://www.johndclare.net/Russ12_Jokes.htm
 https://en.wikipedia.org/wiki/Russian_political_jokes
 *)
 
-(* 
+(* NOTE: this looks like the easiest joke to fomalize! The joke here is about the poor finance situation for devils
 -- Would you choose a capitalist hell or a communist one?
 -- Of course, communist: they either don't have fuel, don't have enough pots for everyone or all devils are drunk.
-NOTE: the joke here is about the poor finance situation for devils
 *)
+(* NOTE: the reasonings is formed as follows:
+1. [assumption] we first assume that the description in sentence 2 means poor
+2. [sentence 2, 1] 2nd sentence shows that comm hell is poor
+3. [sentence 1] 1st sentence is asking for a choice (how to formalize this?)
+4. [sentence 2, sentence 1] 2nd sentence is making a choice to answer sentence 1
+5. [sentence 1, assumption on common sense] normally ppl won't think of a reason to make the choice
+6. [5] if a person makes the choice, he isn't normal
+7. [4] person 2 made a choice, so he isn't normal
+8. [assumption on common sense] we usually assume that any ppl is normal
+9. [6, 7] there exists a person in the chat being not normal. (actually he's mad)
+10. [9] 9 is the joke
+*)
+Module joke_1.
+End joke_1.
 
 (* 
 Two judges meet in a court and one is laughing hysterically.
