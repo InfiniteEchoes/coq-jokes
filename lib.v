@@ -78,7 +78,8 @@ parameters:
 - name of the person
 - the expression that he says
 *)
-Parameter says : string -> expr -> Set.
+Parameter says : string -> expr -> expr.
+(* TODO: make a new type for `says` and write a destructor for the type *)
 
 (* Predicate. A and B confilcts, therefore this story is a joke
   Should take a proposition that resulted in false, and return true 
@@ -118,8 +119,10 @@ Definition ambiguity_word : Set. Admitted.
 (* Predicate. Example: "ab" consists of "a" and "b" *)
 Definition consists_of : Set. Admitted.
 
-(* A predicate to show someone has said something in the sentence *)
-Definition contains : Set. Admitted.
+(* A predicate to show someone has said something in the sentence. Parameters:
+- the expression to contain
+- the whole expression *)
+Definition contains : expr -> expr -> Prop. Admitted.
 
 (* TODO: theorem: If 
 - we have predicate P(A), and
@@ -128,6 +131,8 @@ Definition contains : Set. Admitted.
 *)
 
 Parameter is : expr -> expr -> expr.
+
+Parameter has : expr -> Prop.
 
 (* TODO: think of a mechanic to destruct any words including predicates into list of characters *)
 
@@ -167,12 +172,20 @@ Module Joke_1.
   End Dialogue.
 
   Module Assumptions.
-    (* the description in sentence 2 means poor *)
+    (* "don't have fuel, don't have enough pots for everyone or all devils are drunk" means poor 
+    *)
     Definition a_1 :=
       (is (Plain "poor")
           (Or (Plain "don't have fuel")
             (Or (Plain "don't have enough pots for everyone")
                 (Plain "all devils are drunk")))).
+    
+    (* All people wouldn't make a choice for d_1's question *)
+    Definition a_2 : Prop := forall (person : string) (expression : expr), 
+      ~ ((contains (Answer "A" (Adj (Plain "capitalist") (Plain "hell"))) expression) 
+        \/
+        (contains (Answer "A" (Adj (Plain "communist") (Plain "hell"))) expression)).
+    
   End Assumptions.
 
   (* 
@@ -188,6 +201,8 @@ Module Joke_1.
   10. [9] 9 is the joke
   *)
   Module Joke_proof.
+    (* TODO: what should the proposition be like? *)
+    (* TODO: write small tests below *)
   End Joke_proof.
 End Joke_1.
 
