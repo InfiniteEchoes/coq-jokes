@@ -43,6 +43,16 @@ Parameter ambiguity : Set.
 (* Something just to label that a sentence is totally unrelated to the joke. Could be useful? *)
 Parameter unrelated : Set.
 
+(* DRAFT: some initial way to analyze the sentences *)
+Inductive expr :=
+(* Someone is asking a question *)
+| Ask : Set (* TODO: from person x to person y *)-> expr -> expr
+| Answer : Set -> expr -> expr
+| And : expr -> expr
+| Or : expr -> expr
+| Plain : Set (* Should be string? *)-> expr
+.
+
 (* Draft: the architecture for each joke should be like:
 Module joke_1.
   Module context.
