@@ -68,8 +68,7 @@ End joke_1.
 
 
 (* ******************************** *)
-(* Draft for jokes that might be easy 
-   to formalize *)
+(* Draft: jokes to formalize and prove below *)
 (* ******************************** *)
 
 (* 
@@ -82,6 +81,7 @@ https://en.wikipedia.org/wiki/Russian_political_jokes
 -- Would you choose a capitalist hell or a communist one?
 -- Of course, communist: they either don't have fuel, don't have enough pots for everyone or all devils are drunk.
 *)
+Module joke_1.
 (* NOTE: the reasonings is formed as follows:
 1. [assumption] we first assume that the description in sentence 2 means poor
 2. [sentence 2, 1] 2nd sentence shows that comm hell is poor
@@ -94,7 +94,6 @@ https://en.wikipedia.org/wiki/Russian_political_jokes
 9. [6, 7] there exists a person in the chat being not normal. (actually he's mad)
 10. [9] 9 is the joke
 *)
-Module joke_1.
 End joke_1.
 
 (* 
