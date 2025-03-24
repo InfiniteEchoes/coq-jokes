@@ -35,14 +35,14 @@ Require Import Coq.Strings.String.
 (* General predicates, theorems, tools *)
 (* ******************************** *)
 
-(* Some initial way to analyze the sentences *)
+(* Initial way to analyze the sentences *)
 Inductive expr :=
 (* Someone is asking a question. Parameter : 
 - the person to speak with
 - the content of the sentence *)
 | Ask : String.string -> expr -> expr
 
-(* Parameter : 
+(* Someone is replying. Parameter : 
 - the person to reply with
 - the content of the sentence *)
 | Answer : string -> expr -> expr
@@ -113,8 +113,19 @@ Definition ambiguity_meanings (T : Set) (A : T) (B C : T) :
 *)
 Definition ambiguity_word : Set. Admitted.
 
+(* ********Misc******** *)
+
 (* Predicate. Example: "ab" consists of "a" and "b" *)
 Definition consists_of : Set. Admitted.
+
+(* A predicate to show someone has said something in the sentence *)
+Definition contains : Set. Admitted.
+
+(* TODO: theorem: If 
+- we have predicate P(A), and
+- some sentence contains A
+- then we should conclude a more general claim on that sentence from A
+*)
 
 Parameter is : expr -> expr -> expr.
 
@@ -159,13 +170,11 @@ Module Joke_1.
     (* the description in sentence 2 means poor *)
     Definition a_1 :=
       (is (Plain "poor")
-        (is (Adj (Plain "communist") (Plain "hell")) 
-            (Or (Plain "don't have fuel")
-              (Or (Plain "don't have enough pots for everyone")
-                  (Plain "all devils are drunk"))))).
+          (Or (Plain "don't have fuel")
+            (Or (Plain "don't have enough pots for everyone")
+                (Plain "all devils are drunk")))).
   End Assumptions.
 
-  Module Joke_proof.
   (* 
   1. [assumption] we first assume that the description in sentence 2 means poor
   2. [sentence 2, 1] 2nd sentence shows that comm hell is poor
@@ -178,6 +187,7 @@ Module Joke_1.
   9. [6, 7] there exists a person in the chat being not normal. (actually he's mad)
   10. [9] 9 is the joke
   *)
+  Module Joke_proof.
   End Joke_proof.
 End Joke_1.
 
