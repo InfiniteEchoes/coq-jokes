@@ -3,7 +3,8 @@
 (* ******************************** *)
 (* TODO:
 - maybe set up a CI on git
-- think of useful predicates and how to implement them
+- (persistent)think of useful predicates and how to implement them
+- (future)make a distinguish between meta and object language
 *)
 
 (* NOTE: 
@@ -186,6 +187,9 @@ Module Joke_1.
     (* (Ignore computation)Assume that d_2 contains an answer. *)
     Parameter d_2_is_answer : Predicates.is_answer (expr_of Dialogue.d_2).
 
+    (* (Ignore computation)Assume that talker of d_2 is "B".
+    Lemma b_speaks_d_2 : talker_of Dialogue.d_2 = "B". *)
+
     Parameter contains_poor_implies_is_poor : 
       forall (d : sentence), contains poor_description (expr_of Dialogue.d_2) 
         -> Predicates.is_poor d.
@@ -243,6 +247,16 @@ Module Joke_1.
            any jokes could be safely attributed to such claim. Only this will make the framework for 
            proving joke actually complete. *)
   Module Joke_proof.
+
+  Compute (Assumptions.valid_choice_is_nor_normal Dialogue.d_2).
+
+    (* TODO: fix this *)
+    (* Theorem b_is_not_normal : ~Predicates.is_normal "B".
+    Proof.
+      unfold not.
+      pose proof Assumptions.valid_choice_is_nor_normal. *)
+
+
     (* TODO: prove that someone isn't normal *)
     (* NOTE: clarifying the relation between `talker_of p` and the sentence d is too tedious for me right now
        If I occur to proving such relation I'll just go brutal *)
@@ -282,13 +296,40 @@ The first one: i've just heard the most ridiculous anecdote of my life.
 The other: Care to share?
 The first: Can't, just gave a guy 15 years for it.
 General idea:
-- [assumption]judge makes rules
 - [assumption]if judge sent someone to jail for a reason, the reason with 
   the punishment constitutes to a rule
 - Judge has made a rule that if someone tells a joke, he will be sent to prison
 - If judge tells a joke, he will be sent to prison
 - Judge cannot tell the joke
 *)
+Module Joke_2.
+  Module Predicates.
+  End Predicates.
+
+  Module Dialogue.
+    Definition d_1 := Ask "B" "A" (Plain "funny").
+
+    Definition d_2 := Answer "A" "B" 
+      (Plain "heard the most ridiculous anecdote of my life").
+
+    Definition d_3 := Ask "B" "A" (Plain "share").
+
+    Definition d_4 := Follow 
+      (Answer "A" "B" (Plain "No"))
+      (Say "just gave a guy 15 years for it").
+  End Dialogue.
+
+  Module Assumptions.
+    (* TODO:
+    - all people are judges
+    - all judges makes rules with judgements
+    - there are texts that is a judgement
+    *)
+  End Assumptions.
+
+  Module Joke_proof.
+  End Joke_proof.
+End Joke_2.
 
 (* 
 In the museum of Vasily Chapayev the guide shows the visitors a skeleton:
