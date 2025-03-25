@@ -20,6 +20,13 @@ Module joke_n.
 End Joke_n.
 *)
 
+(* 
+TODO: create modules to set up some common goals to prove:
+- jokes from uncommon behaviors
+- jokes from abnormal person
+- jokes from significant logical errors for a sentence
+*)
+
 (* ******************************** *)
 (* Jokes collected online and to be proved *)
 (* ******************************** *)
