@@ -1,4 +1,4 @@
-Require import CoqJokes.CoqJokes.
+Require Import CoqJokes.CoqJokes.
 
 (* NOTE:
 ARCHITECTURE.
@@ -203,7 +203,7 @@ Module Joke_2.
 
     Definition d_4 := Follow 
       (Answer "A" "B" (Plain "No"))
-      (Say "just gave a guy 15 years for it").
+      (Say "A" (Plain "just gave a guy 15 years for it")).
   End Dialogue.
 
   Module Assumptions.

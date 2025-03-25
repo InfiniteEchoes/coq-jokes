@@ -114,5 +114,3 @@ Definition talker_of (d : sentence) : string. Admitted.
 Definition expr_of (d : sentence) : expr. Admitted.
 
 (* TODO: think of a mechanic to destruct any words including predicates into list of characters *)
-
-Require import CoqJokes.lib.
