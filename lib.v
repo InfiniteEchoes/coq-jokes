@@ -176,12 +176,12 @@ Module Joke_1.
 
   Module Assumptions.
     (* "don't have fuel, don't have enough pots for everyone or all devils are drunk" means poor *)
-    Definition poor_description := (is (Plain "poor")
-    (Or (Plain "don't have fuel")
-      (Or (Plain "don't have enough pots for everyone")
-          (Plain "all devils are drunk")))).
+    Definition poor_description := 
+      (Or (Plain "don't have fuel")
+          (Or (Plain "don't have enough pots for everyone")
+              (Plain "all devils are drunk"))).
 
-    (* (Ignore computation)Assume that d_2 contains something. we ignore the computations *)
+    (* (Ignore computation)Assume that d_2 contains the description above. We ignore the computations *)
     Parameter d_2_contains_poor : contains poor_description (expr_of Dialogue.d_2).
 
     (* (Ignore computation)Assume that d_2 contains an answer. *)
@@ -200,8 +200,7 @@ Module Joke_1.
       forall (d : sentence), Predicates.is_choosing d -> Predicates.is_providing_reason d.
 
     (* If a sentence is providing a reason and answering d_1, that sentence is a valid answer to d_1 
-    NOTE: too complicated to design!... We ignore that it's answering d_1
-    *)
+    NOTE: too complicated to design!... We ignore that it's answering d_1 *)
     Parameter answer_with_choice_is_valid :
       forall (d : sentence), Predicates.is_providing_reason d /\
         Predicates.is_answer (expr_of d) /\
@@ -215,18 +214,6 @@ Module Joke_1.
     (* Everyone should be normal person *)
     Parameter everyone_is_normal :
       forall (p : string), Predicates.is_normal p.
-
-      (* Theorem dist_not_exists : forall(X:Type) (P : X -> Prop),
-    ~(forall x, P x) -> ~(exists x, P x).
-  Proof.
-    intros.
-    unfold not.
-    intro Hx.
-    destruct Hx as [x Hx].
-    specialize (H x).
-    specialize (Hx H).
-    exact Hx.
-  Qed. *)
   End Assumptions.
 
   (* 
@@ -236,7 +223,7 @@ Module Joke_1.
                    making a choice
   3.  [assumption] we assume that the behavior of making choice implies providing a reason
   4.  [assumption] if someone is providing a reason to that question, and that reason contains
-                   the poor description, he is making an unexpected answer.
+                   the poor description, he is making an unexpected answer
   5.  [sentence 2, 1] 2nd sentence contains poor description
   6.  [5, 2] 2nd sentence is making a choice
   7.  [6, 3] 2nd sentence is providing a reason
@@ -244,14 +231,19 @@ Module Joke_1.
   9.  [assumption] if someone is making an unexpected answer, he isn't normal
   10. [assumption] everyone should be normal
   11. [9, 8] the person that spoke the 2nd sentence isn't normal
-  12. [10, 11]someone isn't normal, hence the joke
+  12. [10, 11] someone isn't normal, hence the joke
 
-  Critics: I think setting up the "normal" person contradictory isn't necessary. 
-           Stopping at "unexpected answer" just describes it well enough, but I'm
-           too lazy to change. *)
+  Critics: I think setting up the "normal" person contradiction is too far(assuming that the joke is 
+           caused by mad person). Stopping at "unexpected answer"(assume that the joke is caused by 
+           unexpected behaviour) should be just enough, but I'm too lazy to change. 
+           Assuming on "abnormal person" gets the advantage that we can easily attribute the contradiction
+           to some person. For unexpected behavior we will attribute the contradiction to a sentence 
+           maybe. *)
   Module Joke_proof.
+    (* TODO: we might have to prove something to show that d_2 contains poor description?... *)
+
     (* TODO: prove that someone isn't normal *)
-    (* TODO: clarifying the relation between `talker_of p` and the sentence d is too tedious for me right now
+    (* NOTE: clarifying the relation between `talker_of p` and the sentence d is too tedious for me right now
        If I occur to proving such relation I'll just go brutal *)
     Theorem someone_is_not_normal :
       exists (p : string), ~Predicates.is_normal p. 
