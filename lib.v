@@ -251,6 +251,8 @@ Module Joke_1.
            too lazy to change. *)
   Module Joke_proof.
     (* TODO: prove that someone isn't normal *)
+    (* TODO: clarifying the relation between `talker_of p` and the sentence d is too tedious for me right now
+       If I occur to proving such relation I'll just go brutal *)
     Theorem someone_is_not_normal :
       exists (p : string), ~Predicates.is_normal p. 
     Proof.
