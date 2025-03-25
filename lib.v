@@ -229,7 +229,7 @@ Module Joke_1.
   Qed. *)
   End Assumptions.
 
-  (* TODO: we might need to restate the reasonings more clearly!
+  (* 
   1.  [assumption] we first assume that the description in sentence 2 means poor for simplicity
   2.  [assumption] we want to prove someone is making an unexpected answer. we assume
                    that if the poor description is in some sentence, that sentence is 
@@ -262,15 +262,13 @@ Module Joke_1.
     Theorem there_is_a_joke :
       exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
     Proof.
-    exists (forall (p : string), Predicates.is_normal p).
-    exists Assumptions.everyone_is_normal.
+    exists (forall (p : string), Predicates.is_normal p),
+           Assumptions.everyone_is_normal.
     assert ((exists (p : string), ~Predicates.is_normal p)
             ->
             ~forall (p : string), Predicates.is_normal p).
-    - intros H.
-      destruct H.
-      unfold not. unfold not in H.
-      intros.
+    - unfold not. intros.
+      destruct H. unfold not in H.
       specialize (H0 x).
       specialize (H H0). 
       exact H.
