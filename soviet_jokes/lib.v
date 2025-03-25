@@ -27,6 +27,10 @@ TODO: create modules to set up some common goals to prove:
 - jokes from significant logical errors for a sentence
 *)
 
+(* TODO(progress):
+- either make a nasty stub or finish the string related axiom
+*)
+
 (* ******************************** *)
 (* Jokes collected online and to be proved *)
 (* ******************************** *)
@@ -236,6 +240,19 @@ General idea:
 - Museum has done wrong on Vasily
 - Museum being abnormal, hence the joke
 *)
+Module Joke_3.
+  Module Predicates.
+  End Predicates.
+
+  Module Dialogue.
+  End Dialogue.
+
+  Module Assumptions.
+  End Assumptions.
+
+  Module Joke_proof.
+  End Joke_proof.
+End Joke_3.
 
 (* 
 Two soldiers on the North Pole:

@@ -43,6 +43,19 @@ they can be comprehended correctly.
 我亦尽在一条更阴凉的小径上行走
 走向你的心灵 走向你忘却 逃离的泪雨
 *)
+Module Myth_1.
+  Module Sentences.
+    Definition s_1 := And
+    (* TODO: expand further *)
+      (Plain "I walk into you")
+      (Plain "You walk into me").
+    
+    (* TODO: expand further *)
+    Definition s_2 := And
+      (Plain "I covered my eyes")
+      (Plain "You covered your eyes for me").
+  End Sentences.
+End Myth_1.
 
 (* 
 为什么我要尽兴奔跑？
@@ -70,4 +83,18 @@ they can be comprehended correctly.
 (* 
 心是真正的底力
 无心者在混沌的现象中彷徨
+*)
+
+(* 
+我听到了湖畔的风了
+它再度在我耳边响起
+一切都是如此地宁静
+在沉稳的河畔低声吟唱
+*)
+
+(* 
+谁在眺望星空
+谁在星空上望着我
+让我原地不动
+
 *)
