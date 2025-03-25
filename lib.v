@@ -239,10 +239,12 @@ Module Joke_1.
            unexpected behaviour) should be just enough, but I'm too lazy to change. 
            Assuming on "abnormal person" gets the advantage that we can easily attribute the contradiction
            to some person. For unexpected behavior we will attribute the contradiction to a sentence 
-           maybe. *)
+           maybe. 
+           Actually on second thoughts, I think "what should be the benchmark for a joke?" should be
+           the soul of the whole formalizarion: can we actually find a universal benchmark such that
+           any jokes could be safely attributed to such claim. Only this will make the framework for 
+           proving joke complete. *)
   Module Joke_proof.
-    (* TODO: we might have to prove something to show that d_2 contains poor description?... *)
-
     (* TODO: prove that someone isn't normal *)
     (* NOTE: clarifying the relation between `talker_of p` and the sentence d is too tedious for me right now
        If I occur to proving such relation I'll just go brutal *)
