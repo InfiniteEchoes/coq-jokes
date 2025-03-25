@@ -6,14 +6,14 @@
 - think of useful predicates and how to implement them
 *)
 
-(* NOTE: INTRODUCTION.
+(* NOTE: 
+INTRODUCTION.
 The biggest difference for informal logic to formal logic is that
 informal logic is context based, and everything needs to be given an 
 intrepretation manually,so its hard to formalize. This project is 
 for entertainment only. 
-*)
 
-(* NOTE: ARCHITECTURE.
+ARCHITECTURE.
 Currently I design the following architecture for each jokes:
 Module joke_n.
   (* predicates appeared in the joke *)
@@ -82,6 +82,24 @@ Inductive sentence : Set :=
 (* Predicate. A and B confilcts, therefore this story is a joke. *)
 Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
 
+(* NOTE that this is not a proposition for now *)
+Parameter is : expr -> expr -> expr.
+
+(* A predicate to show someone has said something in the sentence. Parameters:
+- the expression to contain
+- the whole expression 
+Since it's too complicated to actually do the searching, I want to just leave it as a parameter
+*)
+Parameter contains : expr -> expr -> Prop.
+
+(* ********Misc unused/wips******** *)
+
+(* UNUSED.Predicate. For ambiguity on a single word 
+- A: the sentence to be interpreted
+- B, C: different contexts to interpret the sentence
+*)
+Definition ambiguity_word : Set. Admitted.
+
 (* UNUSED.Predicate. Example: A under intrepretation A' means a' and A'' means a''. 
 They have different meaning resulted into a joke 
 parameters:
@@ -98,24 +116,9 @@ NOTE: did i define this predicate wrong?
 *)
 (* Definition ambiguity_meanings (T : Set) (A : T) (B C : T) : 
   is_joke expr (means T A B) (means T A C). Admitted. *)
-
-(* UNUSED.Predicate. For ambiguity on a single word 
-- A: the sentence to be interpreted
-- B, C: different contexts to interpret the sentence
-*)
-Definition ambiguity_word : Set. Admitted.
-
-(* ********Misc******** *)
-
 (* UNUSED.Predicate. Example: "ab" consists of "a" and "b" *)
 Parameter consists_of : Set.
 
-(* A predicate to show someone has said something in the sentence. Parameters:
-- the expression to contain
-- the whole expression 
-Since it's too complicated to actually do the searching, I want to just leave it as a parameter
-*)
-Parameter contains : expr -> expr -> Prop.
 
 (* TODO: theorem: If 
 - we have predicate P(A), and
@@ -123,10 +126,6 @@ Parameter contains : expr -> expr -> Prop.
 - then we should conclude a more general claim on that sentence from A
 *)
 
-(* NOTE that this is not a proposition for now *)
-Parameter is : expr -> expr -> expr.
-
-Parameter has : expr -> Prop.
 
 (* TODO: These functions are too complicated to implement with... *)
 Definition talker_of (d : sentence) : string. Admitted.
