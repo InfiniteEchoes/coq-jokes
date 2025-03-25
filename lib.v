@@ -50,6 +50,7 @@ Adjective. Parameter :
 *)
 | Adj : expr -> expr -> expr
 
+(* Plain text without more meanings. *)
 | Plain : string -> expr
 .
 
@@ -216,7 +217,7 @@ Module Joke_1.
       forall (p : string), Predicates.is_normal p.
   End Assumptions.
 
-  (* 
+  (* Presumed steps for the whole proof:
   1.  [assumption] we first assume that the description in sentence 2 means poor for simplicity
   2.  [assumption] we want to prove someone is making an unexpected answer. we assume
                    that if the poor description is in some sentence, that sentence is 
@@ -259,8 +260,7 @@ Module Joke_1.
     exists (forall (p : string), Predicates.is_normal p),
            Assumptions.everyone_is_normal.
     assert ((exists (p : string), ~Predicates.is_normal p)
-            ->
-            ~forall (p : string), Predicates.is_normal p).
+           -> ~forall (p : string), Predicates.is_normal p).
     - unfold not. intros.
       destruct H. unfold not in H.
       specialize (H0 x).
