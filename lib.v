@@ -2,21 +2,25 @@
 (* Project setups, general notes and etc *)
 (* ******************************** *)
 (* TODO:
--[] formally create a coq project in this folder
--[] maybe set up a CI on git
--[] think of useful predicates and how to implement them
+- maybe set up a CI on git
+- think of useful predicates and how to implement them
 *)
 
-(* NOTE: The biggest difference for informal logic to formal logic is that
-informal logic is context based, and everything needs to be given an intrepretation
-manually,so its hard to formalize. This project is for entertainment only. *)
+(* NOTE: INTRODUCTION.
+The biggest difference for informal logic to formal logic is that
+informal logic is context based, and everything needs to be given an 
+intrepretation manually,so its hard to formalize. This project is 
+for entertainment only. 
+*)
 
-(* NOTE(draft): Architecture for each joke should be like:
+(* NOTE: ARCHITECTURE.
+Currently I design the following architecture for each jokes:
 Module joke_n.
   (* predicates appeared in the joke *)
   Module Predicates.
   End Predicates.
 
+  (* the whole dialogue in the joke *)
   Module Dialogue.
   End Dialogue.
 
@@ -49,13 +53,6 @@ Adjective. Parameter :
 | Plain : string -> expr
 .
 
-(* TODO: set up notations for:
-- Ask as _ ?
-- Answer as _ !
-- Follow as _ ; _
-- Plain as [| _ |]
-*)
-
 (* Sentence here is expressions plus the action that someone speaks this expression *)
 Inductive sentence : Set :=
 (* Someone is asking a question. Parameter : 
@@ -82,9 +79,9 @@ Inductive sentence : Set :=
 .
 
 (* Predicate. A and B confilcts, therefore this story is a joke. *)
-Definition is_joke {A : Prop} : A -> ~A -> Prop. Admitted.
+Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
 
-(* Predicate. Example: A under intrepretation A' means a' and A'' means a''. 
+(* UNUSED.Predicate. Example: A under intrepretation A' means a' and A'' means a''. 
 They have different meaning resulted into a joke 
 parameters:
 - original sentence or slice (undefined, not a clue)
@@ -92,7 +89,7 @@ parameters:
 *)
 Definition means (A : Set) : A -> A -> Prop. Admitted.
 
-(* Predicate. Some sentence makes an ambiguity under different interpretation.
+(* UNUSED.Predicate. Some sentence makes an ambiguity under different interpretation.
 Parameter:
 - A: the sentence to be interpreted
 - B, C: different contexts to interpret the sentence
@@ -101,7 +98,7 @@ NOTE: did i define this predicate wrong?
 (* Definition ambiguity_meanings (T : Set) (A : T) (B C : T) : 
   is_joke expr (means T A B) (means T A C). Admitted. *)
 
-(* Predicate. For ambiguity on a single word 
+(* UNUSED.Predicate. For ambiguity on a single word 
 - A: the sentence to be interpreted
 - B, C: different contexts to interpret the sentence
 *)
@@ -109,7 +106,7 @@ Definition ambiguity_word : Set. Admitted.
 
 (* ********Misc******** *)
 
-(* Predicate. Example: "ab" consists of "a" and "b" *)
+(* UNUSED.Predicate. Example: "ab" consists of "a" and "b" *)
 Parameter consists_of : Set.
 
 (* A predicate to show someone has said something in the sentence. Parameters:
@@ -218,40 +215,70 @@ Module Joke_1.
     (* Everyone should be normal person *)
     Parameter everyone_is_normal :
       forall (p : string), Predicates.is_normal p.
+
+      (* Theorem dist_not_exists : forall(X:Type) (P : X -> Prop),
+    ~(forall x, P x) -> ~(exists x, P x).
+  Proof.
+    intros.
+    unfold not.
+    intro Hx.
+    destruct Hx as [x Hx].
+    specialize (H x).
+    specialize (Hx H).
+    exact Hx.
+  Qed. *)
   End Assumptions.
 
   (* TODO: we might need to restate the reasonings more clearly!
-  1. [assumption] we first assume that the description in sentence 2 means poor
-  2. [sentence 2, 1] 2nd sentence shows that comm hell is poor
-  3. [sentence 1] 1st sentence is asking for a choice (how to formalize this?)
-  4. [sentence 2, sentence 1] 2nd sentence is making a choice to answer sentence 1
-  5. [sentence 1, assumption on common sense] normally ppl won't think of a reason to make the choice
-  6. [5] if a person makes the choice, he isn't normal
-  7. [4] person 2 made a choice, so he isn't normal
-  8. [assumption on common sense] we usually assume that any ppl is normal
-  9. [6, 7] there exists a person in the chat being not normal. (actually, he's mad)
-  10. [9] 9 is the joke
-  *)
+  1.  [assumption] we first assume that the description in sentence 2 means poor for simplicity
+  2.  [assumption] we want to prove someone is making an unexpected answer. we assume
+                   that if the poor description is in some sentence, that sentence is 
+                   making a choice
+  3.  [assumption] we assume that the behavior of making choice implies providing a reason
+  4.  [assumption] if someone is providing a reason to that question, and that reason contains
+                   the poor description, he is making an unexpected answer.
+  5.  [sentence 2, 1] 2nd sentence contains poor description
+  6.  [5, 2] 2nd sentence is making a choice
+  7.  [6, 3] 2nd sentence is providing a reason
+  8.  [sentence 2, 4, 7] 2nd sentence is making an unexpected answer
+  9.  [assumption] if someone is making an unexpected answer, he isn't normal
+  10. [assumption] everyone should be normal
+  11. [9, 8] the person that spoke the 2nd sentence isn't normal
+  12. [10, 11]someone isn't normal, hence the joke
+
+  Critics: I think setting up the "normal" person contradictory isn't necessary. 
+           Stopping at "unexpected answer" just describes it well enough, but I'm
+           too lazy to change. *)
   Module Joke_proof.
     (* TODO: prove that someone isn't normal *)
     Theorem someone_is_not_normal :
       exists (p : string), ~Predicates.is_normal p. 
     Proof.
+      unfold not.
       (* exists "B". *)
     Admitted.
     
-    (* TODO: prove that this whole dialogue is a soviet joke *)
+    (* Prove that this whole dialogue is a soviet joke *)
     Theorem there_is_a_joke :
-      exists (A : Prop) (a : A) (neg_a : ~A), is_joke a neg_a.
+      exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
     Proof.
     exists (forall (p : string), Predicates.is_normal p).
     exists Assumptions.everyone_is_normal.
-    (* assert neg_assumption : (~forall (p : string), Predicates.is_normal p). *)
-    (* TODO: apply the conversion *)
-    (* - exists someone_is_not_normal.  *)
-    (* exists neg_assumption. *)
-    Admitted.
-    (* Qed. *)
+    assert ((exists (p : string), ~Predicates.is_normal p)
+            ->
+            ~forall (p : string), Predicates.is_normal p).
+    - intros H.
+      destruct H.
+      unfold not. unfold not in H.
+      intros.
+      specialize (H0 x).
+      specialize (H H0). 
+      exact H.
+    - specialize (H someone_is_not_normal).
+      exists H.
+      destruct H.
+      exact Assumptions.everyone_is_normal.
+      Qed.
   End Joke_proof.
 End Joke_1.
 
