@@ -92,7 +92,7 @@ Since it's too complicated to actually do the searching, I want to just leave it
 *)
 Parameter contains : expr -> expr -> Prop.
 
-(* ********Misc unused/wips******** *)
+(* ********Unused/wip stuffs******** *)
 
 (* UNUSED.Predicate. For ambiguity on a single word 
 - A: the sentence to be interpreted
@@ -116,16 +116,15 @@ NOTE: did i define this predicate wrong?
 *)
 (* Definition ambiguity_meanings (T : Set) (A : T) (B C : T) : 
   is_joke expr (means T A B) (means T A C). Admitted. *)
+
 (* UNUSED.Predicate. Example: "ab" consists of "a" and "b" *)
 Parameter consists_of : Set.
-
 
 (* TODO: theorem: If 
 - we have predicate P(A), and
 - some sentence contains A
 - then we should conclude a more general claim on that sentence from A
 *)
-
 
 (* TODO: These functions are too complicated to implement with... *)
 Definition talker_of (d : sentence) : string. Admitted.
@@ -242,7 +241,7 @@ Module Joke_1.
            Actually on second thoughts, I think "what should be the benchmark for a joke?" should be
            the soul of the whole formalizarion: can we actually find a universal benchmark such that
            any jokes could be safely attributed to such claim. Only this will make the framework for 
-           proving joke complete. *)
+           proving joke actually complete. *)
   Module Joke_proof.
     (* TODO: prove that someone isn't normal *)
     (* NOTE: clarifying the relation between `talker_of p` and the sentence d is too tedious for me right now
