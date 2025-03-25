@@ -253,24 +253,25 @@ Module Joke_1.
       (* exists "B". *)
     Admitted.
     
-    (* Prove that this whole dialogue is a soviet joke *)
+    (* The whole dialogue is a soviet joke *)
     Theorem there_is_a_joke :
       exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
     Proof.
-    exists (forall (p : string), Predicates.is_normal p),
-           Assumptions.everyone_is_normal.
-    assert ((exists (p : string), ~Predicates.is_normal p)
-           -> ~forall (p : string), Predicates.is_normal p).
-    - unfold not. intros.
-      destruct H. unfold not in H.
-      specialize (H0 x).
-      specialize (H H0). 
-      exact H.
-    - specialize (H someone_is_not_normal).
+      exists (forall (p : string), Predicates.is_normal p),
+            Assumptions.everyone_is_normal.
+      assert ((exists (p : string), ~Predicates.is_normal p)
+            -> ~forall (p : string), Predicates.is_normal p). { 
+        unfold not. intros.
+        destruct H. unfold not in H.
+        specialize (H0 x).
+        specialize (H H0). 
+        exact H.
+      }
+      specialize (H someone_is_not_normal).
       exists H.
       destruct H.
       exact Assumptions.everyone_is_normal.
-      Qed.
+    Qed.
   End Joke_proof.
 End Joke_1.
 
@@ -299,7 +300,6 @@ General idea:
 - for exhibition and bluffing purpose, Vasily got 2x in the museum
 - Museum has done wrong on Vasily
 - Museum being abnormal, hence the joke
-
 *)
 
 (* 
