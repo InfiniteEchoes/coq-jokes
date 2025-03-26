@@ -21,6 +21,11 @@ End Joke_n.
 *)
 
 (* 
+NOTE: the following looks like some redundant work, but once you have read
+the proofs, you might have a thought that we do need to make an distinction
+between different reasons. Looks like sometimes we just have to conclude
+on one specific reason that looks pretty far from the dialogues.
+
 TODO: create modules to set up some common goals to prove:
 - jokes from uncommon behaviors
 - jokes from impoosible events
@@ -216,8 +221,8 @@ General idea:
 *)
 Module Joke_2.
   Module Predicates.
-    Parameter is_judgement : Set.
-    Parameter is_person_joke : Set.
+    Parameter is_judge : string -> Prop.
+    Parameter is_normal : string -> Prop.
   End Predicates.
 
   Module Dialogue.
@@ -235,15 +240,23 @@ Module Joke_2.
 
   Module Assumptions.
     (* TODO:
-    - all people are judges
-    - all judges makes rules with judgements
-    - there are texts that is a judgement
+    - Assumption: if someone doesn't follow judge's rule, he isn't normal
+    - Assumption: if a judge says the event with its punishment, it is a rule that
+      someone cannot involve into the event (difficulty here is the 
+      information is being spreaded into multiple sentences)
+    - Goal: and then let the rules being derived lead to a joke
     *)
+
+    (* All people are judges *)
+    Parameter everyone_is_judge : forall (person : string), 
+      Predicates.is_judge person.
+
   End Assumptions.
 
   (* 
   NOTE: GOAL: prove on event: someone is making an event that isn't normal,
     hence the joke
+    (Should I still turn to abnormal person instead?)
   *)
   Module Joke_proof.
   End Joke_proof.
