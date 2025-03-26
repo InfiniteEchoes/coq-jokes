@@ -22,19 +22,6 @@ End Joke_n.
 TODO: add a `Language_extension` module?
 *)
 
-(* 
-NOTE: the following looks like some redundant work, but once you have read
-the proofs, you might have a thought that we do need to make an distinction
-between different reasons. Looks like sometimes we just have to conclude
-on one specific reason that looks pretty far from the dialogues.
-
-TODO: create modules to set up some common goals to prove:
-- jokes from uncommon behaviors
-- jokes from impoosible events
-- jokes from abnormal person
-- jokes from significant logical errors for a sentence
-*)
-
 (* TODO(progress):
 - either make a nasty stub or finish the string related axiom
 *)
@@ -225,6 +212,10 @@ Module Joke_2.
   Module Predicates.
     Parameter is_judge : string -> Prop.
     Parameter is_normal : string -> Prop.
+    (* TODO:
+    - `summarize`: function to summarize 2 sentence's meanings into one.
+      Maybe it's too flexible to connect with logical `and`?
+    *)
   End Predicates.
 
   Module Dialogue.

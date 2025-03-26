@@ -27,6 +27,7 @@ Require Export Coq.Strings.String.
 Inductive expr :=
 | And : expr -> expr -> expr
 | Or : expr -> expr -> expr
+| Is : expr -> expr -> expr
 
 (* 
 Adjective. Parameter :
@@ -65,12 +66,23 @@ Inductive sentence : Set :=
 .
 
 (* Predicate. A and B confilcts, therefore this story is a joke. *)
+(* 
+NOTE: the following todo seems redundant, but it is raised from the proofs 
+I have written and seems to be necessary. Sometimes we just have to conclude
+on one specific reason that looks pretty far from the dialogues.
+
+TODO: refactor codecreate a module to set up some common goals to prove:
+- jokes from uncommon behaviors
+- jokes from impoosible events
+- jokes from abnormal person
+- jokes from significant logical errors for a sentence
+*)
 Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
 
-(* NOTE that this is not a proposition for now *)
+(* TODO: refactor code and delete this *)
 Parameter is : expr -> expr -> expr.
 
-(* A predicate to show someone has said something in the sentence. Parameters:
+(* Predicate. Show someone has said something in the sentence. Parameters:
 - the expression to contain
 - the whole expression 
 Since it's too complicated to actually do the searching, I want to just leave it as a parameter
