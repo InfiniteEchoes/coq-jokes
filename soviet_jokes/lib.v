@@ -23,6 +23,7 @@ End Joke_n.
 (* 
 TODO: create modules to set up some common goals to prove:
 - jokes from uncommon behaviors
+- jokes from impoosible events
 - jokes from abnormal person
 - jokes from significant logical errors for a sentence
 *)
