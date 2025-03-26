@@ -22,10 +22,6 @@ End Joke_n.
 TODO: add a `Language_extension` module?
 *)
 
-(* TODO(progress):
-- either make a nasty stub or finish the string related axiom
-*)
-
 (* ******************************** *)
 (* Jokes collected online and to be proved *)
 (* ******************************** *)
