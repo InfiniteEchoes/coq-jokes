@@ -18,6 +18,8 @@ Module joke_n.
   Module Joke_proof.
   End Joke_proof.
 End Joke_n.
+
+TODO: add a `Language_extension` module?
 *)
 
 (* 
@@ -254,9 +256,9 @@ Module Joke_2.
   End Assumptions.
 
   (* 
-  NOTE: GOAL: prove on event: someone is making an event that isn't normal,
+  NOTE: GOAL: Prove on event. Someone is making an event that isn't normal,
     hence the joke
-    (Should I still turn to abnormal person instead?)
+    (Should I turn back to abnormal person instead?)
   *)
   Module Joke_proof.
   End Joke_proof.
