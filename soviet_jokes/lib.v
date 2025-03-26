@@ -73,10 +73,6 @@ Module Joke_1.
   End Dialogue.
 
   Module Assumptions.
-    
-    (* Required for strings to work properly in propositions... *)
-    Local Open Scope string_scope.
-
     (* "don't have fuel, don't have enough pots for everyone or all devils are drunk" means poor *)
     Definition poor_description := 
       (Or (Plain "don't have fuel")
@@ -90,7 +86,8 @@ Module Joke_1.
     Parameter d_2_is_answer : Predicates.is_answer (expr_of Dialogue.d_2).
 
     (* (Ignore computation)Assume that talker of d_2 is "B". *)
-    Parameter b_speaks_d_2 : talker_of Dialogue.d_2 = "B".
+    (* NOTE: %string Required for strings to work properly in propositions... *)
+    Parameter b_speaks_d_2 : talker_of Dialogue.d_2 = "B"%string.
 
     Parameter contains_poor_implies_is_poor : 
       forall (d : sentence), contains poor_description (expr_of Dialogue.d_2) 
@@ -113,7 +110,7 @@ Module Joke_1.
         -> Predicates.unexpected_answer d.
 
     (* If someone provides a valid answer, that person isn't normal *)
-    Parameter valid_choice_is_nor_normal :
+    Parameter valid_choice_is_not_normal :
       forall (d : sentence), Predicates.unexpected_answer d -> ~Predicates.is_normal (talker_of d).
     
     (* Everyone should be normal person *)
@@ -150,24 +147,38 @@ Module Joke_1.
            proving joke actually complete. *)
   Module Joke_proof.
 
-    (* TODO(PROGRESS): work on this first *)
+    (* Prove B isn't normal. *)
     Theorem b_is_not_normal : ~Predicates.is_normal "B".
     Proof.
       unfold not.
-      pose proof Assumptions.valid_choice_is_nor_normal.
-    Admitted.
+      pose proof (Assumptions.valid_choice_is_not_normal Dialogue.d_2) 
+        as valid_choice_is_not_normal.
+      pose proof Assumptions.b_speaks_d_2 as b_speaks_d_2.
+      rewrite -> b_speaks_d_2 in valid_choice_is_not_normal.
+      apply valid_choice_is_not_normal.
+      apply Assumptions.answer_with_choice_is_valid.
+      split.
+      - apply Assumptions.is_choosing_implies_provide_reason.
+        apply Assumptions.is_poor_implies_is_choosing.
+        apply Assumptions.contains_poor_implies_is_poor.
+        apply Assumptions.d_2_contains_poor.
+      - split.
+        + apply Assumptions.d_2_is_answer.
+        + apply Assumptions.d_2_contains_poor.
+    Qed.
 
-    (* TODO: prove that someone isn't normal *)
+    (* Prove that someone isn't normal. *)
     (* NOTE: clarifying the relation between `talker_of p` and the sentence d is too tedious for me right now
        If I occur to proving such relation I'll just go brutal *)
     Theorem someone_is_not_normal :
       exists (p : string), ~Predicates.is_normal p. 
     Proof.
       unfold not.
-      (* exists "B". *)
-    Admitted.
+      exists "B"%string.
+      apply b_is_not_normal.
+    Qed.
     
-    (* The whole dialogue is a soviet joke *)
+    (* Mad B makes the whole dialogue a soviet joke. *)
     Theorem there_is_a_joke :
       exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
     Proof.
