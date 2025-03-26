@@ -141,7 +141,6 @@ Module Joke_1.
            any jokes could be safely attributed to such claim. Only this will make the framework for 
            proving joke actually complete. *)
   Module Joke_proof.
-
     (* Prove that B isn't normal. *)
     Theorem b_is_not_normal : ~Predicates.is_normal "B".
     Proof.
@@ -199,12 +198,6 @@ The other: what's so funny?
 The first one: i've just heard the most ridiculous anecdote of my life.
 The other: Care to share?
 The first: Can't, just gave a guy 15 years for it.
-General idea:
-- [assumption]if judge sent someone to jail for a reason, the reason with 
-  the punishment constitutes to a rule
-- Judge has made a rule that if someone tells a joke, he will be sent to prison
-- If judge tells a joke, he will be sent to prison
-- Judge cannot tell the joke
 *)
 Module Joke_2.
   Module Predicates.
@@ -244,8 +237,14 @@ Module Joke_2.
 
   End Assumptions.
 
-  (* 
-  NOTE: GOAL: Prove on event. Someone is making an event that isn't normal,
+  (* NOTE: 
+  General idea:
+  - [assumption]if judge sent someone to jail for a reason, the reason with 
+    the punishment constitutes to a rule
+  - Judge has made a rule that if someone tells a joke, he will be sent to prison
+  - If judge tells a joke, he will be sent to prison
+  - Judge cannot tell the joke
+  GOAL: Prove on event. Someone is making an event that isn't normal,
     hence the joke
     (Should I turn back to abnormal person instead?)
   *)
