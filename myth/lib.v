@@ -47,8 +47,8 @@ Module Myth_1.
   Module Sentences.
     Definition s_1 := And
     (* TODO: expand further *)
-      (Plain "I walk into you")
-      (Plain "You walk into me").
+      (Plain "I walked into you")
+      (Plain "You walked into me").
     
     (* TODO: expand further *)
     Definition s_2 := And
