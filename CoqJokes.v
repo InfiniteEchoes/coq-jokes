@@ -11,8 +11,10 @@
 INTRODUCTION.
 The biggest difference for informal logic to formal logic is that
 informal logic is context based, and everything needs to be given an 
-intrepretation manually,so its hard to formalize. This project is 
-for entertainment only. 
+intrepretation manually,so its hard to formalize. 
+This project is for entertainment only. We're missing many things to 
+formalize, and how detailed these formalizations could be is very personal.
+For example, we would never consider the syntax for English...
 *)
 
 Require Export Coq.Strings.String.
@@ -77,13 +79,13 @@ Parameter contains : expr -> expr -> Prop.
 
 (* ********Unused/wip stuffs******** *)
 
-(* UNUSED.Predicate. For ambiguity on a single word 
+(* UNUSED. Predicate. For ambiguity on a single word 
 - A: the sentence to be interpreted
 - B, C: different contexts to interpret the sentence
 *)
 Definition ambiguity_word : Set. Admitted.
 
-(* UNUSED.Predicate. Example: A under intrepretation A' means a' and A'' means a''. 
+(* UNUSED. Predicate. Example: A under intrepretation A' means a' and A'' means a''. 
 They have different meaning resulted into a joke 
 parameters:
 - original sentence or slice (undefined, not a clue)
@@ -91,7 +93,7 @@ parameters:
 *)
 Definition means (A : Set) : A -> A -> Prop. Admitted.
 
-(* UNUSED.Predicate. Some sentence makes an ambiguity under different interpretation.
+(* UNUSED. Predicate. Some sentence makes an ambiguity under different interpretation.
 Parameter:
 - A: the sentence to be interpreted
 - B, C: different contexts to interpret the sentence
@@ -100,7 +102,7 @@ NOTE: did i define this predicate wrong?
 (* Definition ambiguity_meanings (T : Set) (A : T) (B C : T) : 
   is_joke expr (means T A B) (means T A C). Admitted. *)
 
-(* UNUSED.Predicate. Example: "ab" consists of "a" and "b" *)
+(* UNUSED. Predicate. Example: "ab" consists of "a" and "b" *)
 Parameter consists_of : Set.
 
 (* TODO: theorem: If 

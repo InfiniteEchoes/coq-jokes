@@ -73,6 +73,10 @@ Module Joke_1.
   End Dialogue.
 
   Module Assumptions.
+    
+    (* Required for strings to work properly in propositions... *)
+    Local Open Scope string_scope.
+
     (* "don't have fuel, don't have enough pots for everyone or all devils are drunk" means poor *)
     Definition poor_description := 
       (Or (Plain "don't have fuel")
@@ -85,8 +89,8 @@ Module Joke_1.
     (* (Ignore computation)Assume that d_2 contains an answer. *)
     Parameter d_2_is_answer : Predicates.is_answer (expr_of Dialogue.d_2).
 
-    (* (Ignore computation)Assume that talker of d_2 is "B".
-    Lemma b_speaks_d_2 : talker_of Dialogue.d_2 = "B". *)
+    (* (Ignore computation)Assume that talker of d_2 is "B". *)
+    Parameter b_speaks_d_2 : talker_of Dialogue.d_2 = "B".
 
     Parameter contains_poor_implies_is_poor : 
       forall (d : sentence), contains poor_description (expr_of Dialogue.d_2) 
@@ -146,14 +150,12 @@ Module Joke_1.
            proving joke actually complete. *)
   Module Joke_proof.
 
-  Compute (Assumptions.valid_choice_is_nor_normal Dialogue.d_2).
-
-    (* TODO: fix this *)
-    (* Theorem b_is_not_normal : ~Predicates.is_normal "B".
+    (* TODO(PROGRESS): work on this first *)
+    Theorem b_is_not_normal : ~Predicates.is_normal "B".
     Proof.
       unfold not.
-      pose proof Assumptions.valid_choice_is_nor_normal. *)
-
+      pose proof Assumptions.valid_choice_is_nor_normal.
+    Admitted.
 
     (* TODO: prove that someone isn't normal *)
     (* NOTE: clarifying the relation between `talker_of p` and the sentence d is too tedious for me right now
