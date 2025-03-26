@@ -142,7 +142,7 @@ Module Joke_1.
            proving joke actually complete. *)
   Module Joke_proof.
 
-    (* Prove B isn't normal. *)
+    (* Prove that B isn't normal. *)
     Theorem b_is_not_normal : ~Predicates.is_normal "B".
     Proof.
       unfold not.
@@ -162,9 +162,7 @@ Module Joke_1.
         + apply Assumptions.d_2_contains_poor.
     Qed.
 
-    (* Prove that someone isn't normal. *)
-    (* NOTE: clarifying the relation between `talker_of p` and the sentence d 
-            is too tedious for me right now *)
+    (* Generalize to prove that someone isn't normal. *)
     Theorem someone_is_not_normal :
       exists (p : string), ~Predicates.is_normal p. 
     Proof.
@@ -173,7 +171,7 @@ Module Joke_1.
       apply b_is_not_normal.
     Qed.
     
-    (* Mad B makes the whole dialogue a soviet joke. *)
+    (* Mad Mr.B makes the whole dialogue a soviet joke. *)
     Theorem this_is_a_joke :
       exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
     Proof.
