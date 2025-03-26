@@ -168,8 +168,8 @@ Module Joke_1.
     Qed.
 
     (* Prove that someone isn't normal. *)
-    (* NOTE: clarifying the relation between `talker_of p` and the sentence d is too tedious for me right now
-       If I occur to proving such relation I'll just go brutal *)
+    (* NOTE: clarifying the relation between `talker_of p` and the sentence d 
+            is too tedious for me right now *)
     Theorem someone_is_not_normal :
       exists (p : string), ~Predicates.is_normal p. 
     Proof.
@@ -179,7 +179,7 @@ Module Joke_1.
     Qed.
     
     (* Mad B makes the whole dialogue a soviet joke. *)
-    Theorem there_is_a_joke :
+    Theorem this_is_a_joke :
       exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
     Proof.
       exists (forall (p : string), Predicates.is_normal p),
@@ -215,6 +215,8 @@ General idea:
 *)
 Module Joke_2.
   Module Predicates.
+    Parameter is_judgement : Set.
+    Parameter is_person_joke : Set.
   End Predicates.
 
   Module Dialogue.
@@ -238,6 +240,10 @@ Module Joke_2.
     *)
   End Assumptions.
 
+  (* 
+  NOTE: GOAL: prove on event: someone is making an event that isn't normal,
+    hence the joke
+  *)
   Module Joke_proof.
   End Joke_proof.
 End Joke_2.
