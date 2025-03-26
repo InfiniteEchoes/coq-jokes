@@ -198,6 +198,8 @@ The first: Can't, just gave a guy 15 years for it.
 Module Joke_2.
   Module Predicates.
     Parameter is_judge : string -> Prop.
+    Parameter is_event : string -> Prop.
+    Parameter is_punishment : string -> Prop.
     Parameter is_normal : string -> Prop.
     (* TODO:
     - `summarize`: function to summarize 2 sentence's meanings into one.
@@ -221,7 +223,7 @@ Module Joke_2.
   Module Assumptions.
     (* TODO:
     - Assumption: if someone doesn't follow judge's rule, he isn't normal
-    - Assumption: if a judge says the event with its punishment, it is a rule that
+    - Assumption: if a judge says a event with its punishment, it is a rule that
       someone cannot involve into the event (difficulty here is the 
       information is being spreaded into multiple sentences)
     - Goal: and then let the rules being derived lead to a joke
