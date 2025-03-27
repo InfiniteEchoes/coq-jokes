@@ -22,6 +22,11 @@ End Joke_n.
 TODO: add a `Language_extension` module?
 *)
 
+(* TODO:
+- Can we show that a proof has covered the essence for 
+  a full dialogue?
+*)
+
 (* ******************************** *)
 (* Jokes collected online and to be proved *)
 (* ******************************** *)
@@ -190,10 +195,7 @@ End Joke_1.
 
 Module Joke_2.
   Module Predicates.
-    Parameter is_judge : string -> Prop.
-    Parameter is_event : string -> Prop.
-    Parameter is_punishment : string -> Prop.
-    Parameter is_normal : string -> Prop.
+    Parameter is_telling_joke : string -> Prop.
     Parameter summarize : sentence -> sentence -> sentence.
   End Predicates.
 
@@ -229,6 +231,13 @@ Module Joke_2.
     - conclusion : unexpected joke exists is the actual joke
     *)
     Definition behavior_description := Plain "anecdote".
+
+    Definition description_f : exists (person : string), is_telling_joke person.
+
+    (* NOTE: Maybe we will feed in the summarized sentence into this axiom *)
+    Parameter description_translation : forall (d : sentence),
+      contains behavior_description d -> description f (talker_of d).
+
   End Assumptions.
 
   (* NOTE: 
