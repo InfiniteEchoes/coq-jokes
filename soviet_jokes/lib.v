@@ -110,11 +110,11 @@ Module Joke_1.
   End Assumptions.
 
   (* Presumed steps for the whole proof:
-  1.  [assumption] we first assume that the description in sentence 2 means poor for simplicity
-  2.  [assumption] we want to prove someone is making an unexpected answer. we assume
-                   that if the poor description is in some sentence, that sentence is 
-                   making a choice
-  3.  [assumption] we assume that the behavior of making choice implies providing a reason
+  1.  [assumption] we assume that the description in sentence 2 means poor for simplicity
+  2.  [assumption] we assume that if the poor description is in some sentence, that sentence
+                   is making a choice. we want to prove someone is making an unexpected answer. 
+  3.  [assumption] we assume that if some sentence is making a choice, that talker of the 
+                   sentence is providing a reason
   4.  [assumption] if someone is providing a reason to that question, and that reason contains
                    the poor description, he is making an unexpected answer
   5.  [sentence 2, 1] 2nd sentence contains poor description
@@ -236,13 +236,13 @@ Module Joke_2.
   End Assumptions.
 
   (* NOTE: 
-  General idea:
+  Draft of the proof(unexpected event):
   - [assumption]if judge sent someone to jail for a reason, the reason with 
     the punishment constitutes to a rule
   - Judge has made a rule that if someone tells a joke, he will be sent to prison
   - If judge tells a joke, he will be sent to prison
   - Judge cannot tell the joke
-  GOAL: Prove on event. Someone is making an event that isn't normal,
+  - Someone is making an event (existed?) that isn't normal,
     hence the joke
     (Should I turn back to abnormal person instead?)
   *)
@@ -255,7 +255,7 @@ In the museum of Vasily Chapayev the guide shows the visitors a skeleton:
 "And here you can see the skeleton of Vasily Chapayev."
 "And what is this small skeleton next to him?"
 "That's Vasily Chapayev in his childhood."
-General idea:
+Draft for the proof:
 - one person could have only one skeleton
 - for exhibition and bluffing purpose, Vasily got 2x in the museum
 - Museum has done wrong on Vasily
@@ -280,6 +280,20 @@ Two soldiers on the North Pole:
 - wanna hear a political joke?
 - not really, afraid they’ll send me to some shithole then.
 NOTE: hard to formalize. GPT says this is because they think Siberia could be worse than north pole
+Draft for proof(unexpected event):
+- if someone shares about a political joke, both of the people will be discovered
+  (as a simulation of "might be punished")
+- if someone has been discovered, he will be punished
+- if someone punished, he will be "sent to some shithole"
+- "send to some shithole" means "send to syberia"
+- if a situation is harder than the other situation, we call the situation "a punishment" 
+  (or use "bad situation" for more refined reasoning?)
+- everyone is currently in north pole
+- assume that north pole is the worst place in the world
+- assume that there could be no punishment outside north pole
+- syberia is worse than north pole
+- "there are worse case than the worse", hence the joke.
+- syberia being worse than north pole has symbolized a russia being worse than any people normally expect
 *)
 
 (* 
@@ -298,6 +312,9 @@ Russian and American go to hell. Satan approaches them, says:
 – In American hell, you need to eat a bucket of shit once a day, and in Russian – 2 buckets of shit, – Satan answers.
 – Why do I have another bucket of shit? – says the American, chooses the American hell.
 – Well, I lived in Russia, into the Russian hell and I will go, what is it, – says the Russian, chooses the Russian hell.
-They meet somehow after a while. Russian asks an American: – Well, how are you in hell? – Yes, good. I ate one bucket and walk all day. And you? – Yes, as usual: there are not enough buckets for all, then they will bring little shit.
+They meet somehow after a while. Russian asks an American: 
+– Well, how are you in hell? 
+– Yes, good. I ate one bucket and walk all day. And you? 
+– Yes, as usual: there are not enough buckets for all, then they will bring little shit.
 NOTE: More complicated implications than the 1st joke...
 *)

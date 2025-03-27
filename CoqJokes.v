@@ -10,11 +10,17 @@
 (* NOTE: 
 INTRODUCTION.
 The biggest difference for informal logic to formal logic is that
-informal logic is context based, and everything needs to be given an 
-intrepretation manually,so its hard to formalize. 
-This project is for entertainment only. We're missing many things to 
-formalize, and how detailed these formalizations could be is very personal.
-For example, we would never consider the syntax for English...
+informal logic is context based, and everything needs to be given 
+an intrepretation manually,so its hard to formalize. 
+Despite the work in writing the proofs, the actual work for formalizing
+jokes is setting up a framework so that any jokes can be reasoned 
+by this framework. What propositions can be identified as proving 
+that this story is a joke? That is something totally written in your 
+hypothesises, not in your deductions. TL;DR: we're developing a 
+framework, not proving the jokes.
+Given the ambiguity of jokes, and the absence for so many contexts 
+that should appear in jokes, syntactic considerations for English, 
+and etc., this project is a personal attempt mostly for entertainment.
 *)
 
 Require Export Coq.Strings.String.
@@ -61,7 +67,7 @@ Inductive sentence : Set :=
 (* Someone is just saying something.
 - name of the person
 - the expression that he says
- *)
+*)
 | Say : string -> expr -> sentence
 .
 
@@ -71,9 +77,9 @@ NOTE: the following todo seems redundant, but it is raised from the proofs
 I have written and seems to be necessary. Sometimes we just have to conclude
 on one specific reason that looks pretty far from the dialogues.
 
-TODO: refactor codecreate a module to set up some common goals to prove:
+TODO: (refactor code) create a module to set up some common goals to prove:
 - jokes from uncommon behaviors
-- jokes from impoosible events
+- jokes from unexpected events
 - jokes from abnormal person
 - jokes from significant logical errors for a sentence
 *)

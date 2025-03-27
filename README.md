@@ -1,5 +1,5 @@
 # Coq Jokes
-Best soviet jokes in the world, formally verified.
+Best jokes in the world, formally verified.
 
 For entertainment, not for competitions.
 
