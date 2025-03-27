@@ -92,7 +92,7 @@ Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
 - Define a predicate `reflect` to lift a type of joke to 
   another type of joke. Reflection is such a special sauce in showing the beauty
   of the jokes. 
-- Clarift the relation between joke goals and the reflection operation.*)
+- Clarify the relation between joke goals and the reflection operation.*)
 
 (* TODO: refactor code and delete this *)
 Parameter is : expr -> expr -> expr.

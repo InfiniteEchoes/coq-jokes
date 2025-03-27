@@ -5,18 +5,23 @@ INTRODUCTION.
 I have randomly collected some pieces from the internet, and
 below will be some very slow attempts to formalize these texts.
 Since they are much more wilder to give exact meanings, I might
-just delete some of the texts in no time once I find them too hard
-to formalize.
+just delete some of the texts in no time once I find them too 
+hard to formalize.
 
-The final goal for these text is not to prove that they are jokes, or
-to say, they are contradictory. Something even softer to prove is that 
-they can be comprehended correctly.
+The final goal for these text is not to prove that they are 
+jokes, or they lead to contradictions. Something even softer 
+to prove is that they can be comprehended correctly.
 *)
 
 (* ******************************** *)
 (* General predicates, theorems, tools *)
 (* ******************************** *)
-Parameter is_extraction : expr -> expr.
+Parameter is_extraction : expr -> expr -> Prop.
+
+Definition extraction (origin : expr) (detail : expr) : expr * Prop :=
+  (detail, is_extraction origin detail).
+
+Parameter is_context_suggestion : expr -> expr -> Prop.
 
 (* ************************ *)
 (* Ideas to formalize *)
@@ -29,7 +34,7 @@ Parameter is_extraction : expr -> expr.
 身后海岸闪烁着清晨的辉煌 睡醒的人懒散地收拾衣裳
 双目惺忪 迷茫而彷徨
 
-我不愿再最新一时之爱或一时之怨
+我不愿再醉心一时之爱或一时之怨
 一纸过时的航帆没有乘行的必要
 沉睡的人依旧沉迷于沉眠的梦
 因黑色的太阳依旧闪耀着明亮的光
@@ -51,23 +56,26 @@ Parameter is_extraction : expr -> expr.
 Module Myth_1.
   Module Sentences.
     Definition s_1 := And
-    (* TODO: expand further *)
       (Plain "I walked into you")
       (Plain "You walked into me").
     
-    (* TODO: expand further *)
+    (* TODO: develop interpretations on this sentence:
+    - [comparison?]s_1
+    *)
     Definition s_2 := And
       (Plain "I covered my eyes")
       (Plain "You covered your eyes for me").
 
     (* TODO: develop interpretations on this sentence:
-    - [???] days without heart
-    - [context suggestion] flows away like water
+    - [???]days without heart
+    - [context suggestion]flows away like water
+    - [context suggestion]heart
     *)
     Definition s_3 := (Plain "Heart flows away like water in days without heart").
-
-
   End Sentences.
+
+  Module Assumptions.
+  End Assumptions.
 End Myth_1.
 
 (* 
@@ -109,7 +117,6 @@ End Myth_1.
 谁在眺望星空
 谁在星空上望着我
 让我原地不动
-
 *)
 
 (* 
