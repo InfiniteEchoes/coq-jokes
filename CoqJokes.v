@@ -79,7 +79,7 @@ NOTE: the following todo seems redundant, but it is raised from the proofs
 I have written and seems to be necessary. Sometimes we just have to conclude
 on one specific reason that looks pretty far from the dialogues.
 
-TODO: (refactor code)Joke goals. Create a module to set up common goals to prove
+TODO(refactor code): Joke goals. Create a module to set up common goals to prove
 the legibility for a joke:
 - jokes from unexpected events: uncommon behaviors happened
 - jokes from abnormal identity: abnormal person, abnormal places or things, etc.
