@@ -38,16 +38,16 @@ Module Joke_1.
     Parameter is_answer : expr -> Prop.
     Parameter is_choosing : sentence -> Prop.
     Parameter is_providing_reason : sentence -> Prop.
-    (* Maybe this predicate can be expanded to contain more informations... *)
+    (* NOTE: Maybe this predicate can be expanded to contain more informations... *)
     Parameter unexpected_answer : sentence -> Prop.
     Parameter is_normal : string -> Prop.
   End Predicates.
 
+  (* Looks like the easiest joke to fomalize! The joke here is about the poor finance situation for devils
+  -- Would you choose a capitalist hell or a communist one?
+  -- Of course, communist: they either don't have fuel, don't have enough pots for everyone or all devils are drunk.
+  *)
   Module Dialogue.
-    (* NOTE: This looks like the easiest joke to fomalize! The joke here is about the poor finance situation for devils
-    -- Would you choose a capitalist hell or a communist one?
-    -- Of course, communist: they either don't have fuel, don't have enough pots for everyone or all devils are drunk.
-    *)
     Definition d_1 := Ask "A" "B"
       (Or
         (Adj (Plain "capitalist") (Plain "hell"))
@@ -109,7 +109,7 @@ Module Joke_1.
       forall (p : string), Predicates.is_normal p.
   End Assumptions.
 
-  (* Presumed steps for the whole proof:
+  (* Presumed steps for the proof:
   1.  [assumption] we assume that the description in sentence 2 means poor for simplicity
   2.  [assumption] we assume that if the poor description is in some sentence, that sentence
                    is making a choice. we want to prove someone is making an unexpected answer. 
@@ -188,25 +188,22 @@ Module Joke_1.
   End Joke_proof.
 End Joke_1.
 
-(* 
-Two judges meet in a court and one is laughing hysterically.
-The other: what's so funny?
-The first one: i've just heard the most ridiculous anecdote of my life.
-The other: Care to share?
-The first: Can't, just gave a guy 15 years for it.
-*)
 Module Joke_2.
   Module Predicates.
     Parameter is_judge : string -> Prop.
     Parameter is_event : string -> Prop.
     Parameter is_punishment : string -> Prop.
     Parameter is_normal : string -> Prop.
-    (* TODO:
-    - `summarize`: function to summarize 2 sentence's meanings into one.
-      Maybe it's too flexible to connect with logical `and`?
-    *)
+    Parameter summarize : sentence -> sentence -> sentence.
   End Predicates.
 
+  (* 
+  Two judges meet in a court and one is laughing hysterically.
+  The other: what's so funny?
+  The first one: i've just heard the most ridiculous anecdote of my life.
+  The other: Care to share?
+  The first: Can't, just gave a guy 15 years for it.
+  *)
   Module Dialogue.
     Definition d_1 := Ask "B" "A" (Plain "funny").
 
@@ -221,31 +218,26 @@ Module Joke_2.
   End Dialogue.
 
   Module Assumptions.
-    (* TODO:
-    - Assumption: if someone doesn't follow judge's rule, he isn't normal
-    - Assumption: if a judge says a event with its punishment, it is a rule that
-      someone cannot involve into the event (difficulty here is the 
-      information is being spreaded into multiple sentences)
-    - Goal: and then let the rules being derived lead to a joke
+    (* TODO: write the following assumptions:
+    - [summarize]there exists someone being sentenced 15 yrs by telling a joke. need to provide 3 steps:
+      - the plain description
+      - its formalized description
+      - an axiom to translate the former to the latter
+    - [Assumption]if someone is being sentenced, there exists law forbidding something
+    - [Assumption]if law forbids something, that something exists
+    - [Assumption]but something is a joke that should not exist
+    - conclusion : unexpected joke exists is the actual joke
     *)
-
-    (* All people are judges *)
-    Parameter everyone_is_judge : forall (person : string), 
-      Predicates.is_judge person.
-
+    Definition behavior_description := Plain "anecdote".
   End Assumptions.
 
   (* NOTE: 
-  Draft of the proof(unexpected event, abnormal identity):
-  - [assumption]if judge sent someone to jail for a reason, the reason with 
-    the punishment constitutes to a rule
-  - Judge has made a rule that if someone tells a joke, he will be sent to prison
-  - If judge tells a joke, he will be sent to prison
-  - Judge cannot tell the joke
-  - (unexpected event)Someone is making an event (existed?) that isn't normal
-  - if judge can make such an unexpected even happen, his behavior reflects
-      the law system in Russia
-  - (abnormal identity)Russia being worse than everyone has expected
+  Draft of the proof(unexpected event):
+  - anon is sentenced heavily because of telling a joke
+  - that joke is funny to tell yet written and forbidden in law
+  - description being identified as joke means it is unexpected
+  - forbidden by law means that description is true
+  - there exists event happening that is so unexpected
   *)
   Module Joke_proof.
   End Joke_proof.
