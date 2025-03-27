@@ -10,8 +10,9 @@
 (* NOTE: 
 INTRODUCTION.
 The biggest difference for informal logic to formal logic is that
-informal logic is context based, and everything needs to be given 
-an intrepretation manually,so its hard to formalize. 
+informal logic is context based. Everything needs to be given 
+an intrepretation manually, which attributes to the difficulty to
+prove informal logic.
 
 Despite the work in writing the proofs, the actual work for formalizing
 jokes is setting up a framework so that any jokes can be reasoned 
