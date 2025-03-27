@@ -13,6 +13,11 @@ to say, they are contradictory. Something even softer to prove is that
 they can be comprehended correctly.
 *)
 
+(* ******************************** *)
+(* General predicates, theorems, tools *)
+(* ******************************** *)
+Parameter is_extraction : expr -> expr.
+
 (* ************************ *)
 (* Ideas to formalize *)
 (* ************************ *)
@@ -54,6 +59,14 @@ Module Myth_1.
     Definition s_2 := And
       (Plain "I covered my eyes")
       (Plain "You covered your eyes for me").
+
+    (* TODO: develop interpretations on this sentence:
+    - [???] days without heart
+    - [context suggestion] flows away like water
+    *)
+    Definition s_3 := (Plain "Heart flows away like water in days without heart").
+
+
   End Sentences.
 End Myth_1.
 
