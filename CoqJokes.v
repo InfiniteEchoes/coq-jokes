@@ -12,12 +12,14 @@ INTRODUCTION.
 The biggest difference for informal logic to formal logic is that
 informal logic is context based, and everything needs to be given 
 an intrepretation manually,so its hard to formalize. 
+
 Despite the work in writing the proofs, the actual work for formalizing
 jokes is setting up a framework so that any jokes can be reasoned 
 by this framework. What propositions can be identified as proving 
 that this story is a joke? That is something totally written in your 
 hypothesises, not in your deductions. TL;DR: we're developing a 
-framework, not proving the jokes.
+framework, not refining the steps of proofs.
+
 Given the ambiguity of jokes, and the absence for so many contexts 
 that should appear in jokes, syntactic considerations for English, 
 and etc., this project is a personal attempt mostly for entertainment.
@@ -77,13 +79,19 @@ NOTE: the following todo seems redundant, but it is raised from the proofs
 I have written and seems to be necessary. Sometimes we just have to conclude
 on one specific reason that looks pretty far from the dialogues.
 
-TODO: (refactor code) create a module to set up some common goals to prove:
-- jokes from uncommon behaviors
-- jokes from unexpected events
-- jokes from abnormal person
+TODO: (refactor code)Joke goals. Create a module to set up common goals to prove
+the legibility for a joke:
+- jokes from unexpected events: uncommon behaviors happened
+- jokes from abnormal identity: abnormal person, abnormal places or things, etc.
 - jokes from significant logical errors for a sentence
 *)
 Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
+
+(* TODO(important): 
+- Define a predicate `reflect` to lift a type of joke to 
+  another type of joke. Reflection is such a special sauce in showing the beauty
+  of the jokes. 
+- Clarift the relation between joke goals and the reflection operation.*)
 
 (* TODO: refactor code and delete this *)
 Parameter is : expr -> expr -> expr.

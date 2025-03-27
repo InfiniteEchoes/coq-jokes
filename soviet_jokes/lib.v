@@ -236,15 +236,16 @@ Module Joke_2.
   End Assumptions.
 
   (* NOTE: 
-  Draft of the proof(unexpected event):
+  Draft of the proof(unexpected event, abnormal identity):
   - [assumption]if judge sent someone to jail for a reason, the reason with 
     the punishment constitutes to a rule
   - Judge has made a rule that if someone tells a joke, he will be sent to prison
   - If judge tells a joke, he will be sent to prison
   - Judge cannot tell the joke
-  - Someone is making an event (existed?) that isn't normal,
-    hence the joke
-    (Should I turn back to abnormal person instead?)
+  - (unexpected event)Someone is making an event (existed?) that isn't normal
+  - if judge can make such an unexpected even happen, his behavior reflects
+      the law system in Russia
+  - (abnormal identity)Russia being worse than everyone has expected
   *)
   Module Joke_proof.
   End Joke_proof.
@@ -255,7 +256,7 @@ In the museum of Vasily Chapayev the guide shows the visitors a skeleton:
 "And here you can see the skeleton of Vasily Chapayev."
 "And what is this small skeleton next to him?"
 "That's Vasily Chapayev in his childhood."
-Draft for the proof:
+Draft for the proof(abnormal identity):
 - one person could have only one skeleton
 - for exhibition and bluffing purpose, Vasily got 2x in the museum
 - Museum has done wrong on Vasily
@@ -275,12 +276,12 @@ Module Joke_3.
   End Joke_proof.
 End Joke_3.
 
-(* 
+(* NOTE: Now I like this joke. If you want to reason about the joke you have 
+  to dig in for a lot and prove then all
 Two soldiers on the North Pole:
 - wanna hear a political joke?
 - not really, afraid they’ll send me to some shithole then.
-NOTE: hard to formalize. GPT says this is because they think Siberia could be worse than north pole
-Draft for proof(unexpected event):
+Draft for proof(abnormal identity):
 - if someone shares about a political joke, both of the people will be discovered
   (as a simulation of "might be punished")
 - if someone has been discovered, he will be punished
@@ -289,11 +290,11 @@ Draft for proof(unexpected event):
 - if a situation is harder than the other situation, we call the situation "a punishment" 
   (or use "bad situation" for more refined reasoning?)
 - everyone is currently in north pole
-- assume that north pole is the worst place in the world
-- assume that there could be no punishment outside north pole
-- syberia is worse than north pole
-- "there are worse case than the worse", hence the joke.
-- syberia being worse than north pole has symbolized a russia being worse than any people normally expect
+- [Assumption]north pole is the worst place in the world
+- [Assumption]there could be no punishment outside north pole
+- syberia is worse than north pole. "there are worse case than the worst"
+- syberia being worse than north pole reflects a Russia being worse than any people normally expect
+- "russia is worse than people that would nomally expect", hence the joke
 *)
 
 (* 
