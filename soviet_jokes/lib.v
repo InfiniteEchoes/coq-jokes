@@ -172,7 +172,7 @@ Module Joke_1.
     Qed.
     
     (* Mad Mr.B makes the whole dialogue a soviet joke. *)
-    Theorem this_is_a_joke :
+    Theorem abnormal_person_is_a_joke :
       exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
     Proof.
       exists (forall (p : string), Predicates.is_normal p),
@@ -239,16 +239,16 @@ Module Joke_2.
     *)
     Definition behavior_description := Plain "anecdote".
 
-    (* There exists someone being sentenced 15 yrs by telling a joke *)
-    Definition description_f : exists (person : string), is_telling_joke person.
+    Parameter summarize_sentence : summarize d_2 d_4 = 
+      Say "A" (Plain "gave a guy 15 years for the most ridiculous anecdote of my life").
 
-    (* NOTE: Maybe we will feed in the summarized sentence into this axiom *)
-    Parameter description_translation : forall (d : sentence),
-      contains behavior_description d -> description f (talker_of d).
+    Parameter analyze_meaning : forall (d : sentence), 
+      contains "a guy" (expr_of d) /\ contains behavior_description (expr_of d) 
+      -> is_sentenced "a guy" description. (* TODO: clarify on is_joke part *)
 
     (* If someont sentenced a person for a behavior, that behavior is forbidden by law *)
-    Parameter sentenced_means_law_forbids : forall (person : string) (behavior : expr),
-      is_sentenced person behavior -> is_forbidden behavior.
+    Parameter sentenced_means_law_forbids : forall (person : string) (description : expr),
+      is_sentenced person description -> is_forbidden description.
 
     (* If law forbids something, that something is expected *)
     Parameter law_forbids_means_exists : forall (description : expr), 
@@ -280,7 +280,7 @@ Module Joke_2.
     Theorem forbidden_even_exist : Prop. Admitted.
 
     (* TODO:  *)
-    Theorem this_is_a_joke :
+    Theorem unexpected_event_is_a_joke :
       exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
     Admitted.
 
