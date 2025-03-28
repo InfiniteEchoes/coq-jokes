@@ -202,11 +202,12 @@ Module Joke_2.
     - the person being sentenced
     - the behavior
     *)
+    Parameter summarize : sentence -> sentence -> sentence.
     Parameter is_sentenced : string -> expr -> Prop.
     Parameter is_forbidden : expr -> Prop.
     Parameter is_telling_joke : string -> Prop.
-    Parameter event_exists : Event -> Prop.
-    Parameter summarize : sentence -> sentence -> sentence.
+    Parameter is_joke : Event -> Prop.
+    Parameter is_expected : Event -> Prop.
   End Predicates.
 
   (* 
@@ -230,18 +231,12 @@ Module Joke_2.
   End Dialogue.
 
   Module Assumptions.
-    (* TODO: 
-    - Clarify the difference between existence a description and the actual event, causing huge 
-      ambiguity in the procedure of proving
-    - Write the following assumptions:
-    - [summarize]there exists someone being sentenced 15 yrs by telling a joke. need to provide steps:
-      - the plain description
-      - an axiom to translate the former to the latter
-    - [Assumption]but something is a joke that should not exist
-    - conclusion : unexpected joke exists is the actual joke
+    Import Predicates.
+    (* TODO:
+    - write an assumption that d2 & d4 summarizes into full meaning
+    - clarify that some sentence contains the description
+    - clarify `is_joke` parts since it's been never used
     *)
-    (* We will ignore the ambiguity that existence of such behavior conflicts 
-    with the existence of such description... *)
     Definition behavior_description := Plain "anecdote".
 
     (* There exists someone being sentenced 15 yrs by telling a joke *)
@@ -251,28 +246,44 @@ Module Joke_2.
     Parameter description_translation : forall (d : sentence),
       contains behavior_description d -> description f (talker_of d).
 
-    Parameter sentenced_means_law_forbids : forall (person : string) (behavior),
+    (* If someont sentenced a person for a behavior, that behavior is forbidden by law *)
+    Parameter sentenced_means_law_forbids : forall (person : string) (behavior : expr),
       is_sentenced person behavior -> is_forbidden behavior.
 
-    (* TODO: If law forbids something, that something exists(is expected) *)
-    Parameter law_forbids_means_exists : Prop.
+    (* If law forbids something, that something is expected *)
+    Parameter law_forbids_means_exists : forall (description : expr), 
+      is_forbidden description -> is_expected (Event.C description).
 
-    (* TODO: If joke for something exists, that something is unexpected *)
-    Parameter joke_exists_means_not_exist : Prop.
+    (* If an event is a joke, that event is unexpected *)
+    Parameter joke_event_is_unexpected : forall (e : Event), is_joke e -> ~ is_expected e.
 
+    (* If an event is being sentenced, that event is expected *)
+    Parameter sentenced_event_is_expected : forall (e : Event), is_forbedden e -> is_expected e.
   End Assumptions.
 
   (* NOTE: 
   Draft of the proof(unexpected event):
-  - anon is sentenced heavily because of telling a joke
-  - that joke is funny to tell yet written and forbidden in law
-  - description being identified as joke means it is unexpected
-  - forbidden by law means that description is true
-  - there exists event happening that is so unexpected
+  1. [sentence 2] anon is telling a joke
+  2. [sentence 4] anon has been sentenced 15 yrs
+  3. [summarize 1, 2] anon is sentenced heavily because of telling a joke
+  4. [assumption] if an event is a joke, that event is unexpected
+  5. [1, 4] the content of joke is unexpected (TODO: expand further from joke to event)
+  6. [assumption] if an event is forbidden, that event is expected 
+  7. [2, 6] the content of the joke is expected
+  8. [6, 7] there exists an expected event that is unexpected, henced the joke
   *)
   Module Joke_proof.
-    (* TODO: from joke's def, such behavior shouldn't exist since it is unexpected *)
-    Theorem joke_behavior_should_not_exist : Prop. Admitted.
+    (* TODO: from joke's def, such event is unexpected *)
+    Theorem joke_event_not_exist : Prop. Admitted.
+
+    (* TODO: from law's def, such event has already been expected *)
+    Theorem forbidden_even_exist : Prop. Admitted.
+
+    (* TODO:  *)
+    Theorem this_is_a_joke :
+      exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
+    Admitted.
+
 
   End Joke_proof.
 End Joke_2.
