@@ -15,19 +15,25 @@ that this story is a joke? That is something totally written in your
 hypothesises, not in your deductions. TL;DR: we're developing a 
 framework, not refining the steps of proofs.
 
+If we assume the proof goal is true, we can already trivially prove 
+that that goal is true. In contrast, I believe the most rigorous 
+proof comes from the procedure of refining the assumptions, so that
+they are becoming weaker and weaker.
+
 Given the ambiguity of jokes, and the absence for so many contexts 
 that should appear in jokes, syntactic considerations for English, 
 and etc., this project is a personal attempt mostly for entertainment.
 
 MID TERM TASKS.
 1. Set up a CI on git
-2. Setup a module of predicates, substitute all `is_xx` predicates to 
-   `Is "xx" _` predicate
+2. Set up a module of predicates, substitute all `is_xx` predicates 
+   to `Is "xx" _` predicate
 
 LONG TERM TASKS.
 1. More refined proofs. Don't just rely on plain texts
 2. More useful predicates
 3. Distinguish between meta and object language
+4. Refactor completed proofs whenever architecture update happens
 *)
 
 Require Export Coq.Strings.String.
@@ -83,33 +89,17 @@ Inductive sentence : Set :=
 | Narrate : expr -> sentence
 .
 
-(* Predicate. A and B confilcts, therefore this story is a joke. *)
-Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
-
-(* Predicate. Show someone has said something in the sentence. Parameters:
-- the expression to contain
-- the whole expression 
-Since it's too complicated to actually do the searching, I want to just leave it as a parameter
-*)
-Parameter contains : expr -> expr -> Prop.
-
-(* ******************************** *)
-(* Unused, Unstable, WIP *)
-(* ******************************** *)
-
-(* TODO(important): 
-- Define a predicate `reflect` to lift a type of joke to 
-  another type of joke. Reflection is such a special sauce in showing the beauty
-  of the jokes. 
-- Clarify the relation between joke goals and the reflection operation.*)
-
-(* WIP: Common reasons to form a joke, along with tools to identify them 
-  NOTE: The following work seems redundant, but it is raised from the proofs 
-  I have written and seems to be necessary. Sometimes we just have to conclude
-  on one specific reason that looks pretty far from the dialogues.
-  TODO: refactor code and take off the `is_joke` function
+(* WIP: A module providing common tools to prove a joke, along with tools to 
+  identify them 
+  NOTE: This seems redundant, but it is raised from the proofs I have written 
+  and seems to be necessary. Sometimes we just have to conclude on one specific 
+  reason that looks pretty far from the dialogues.
+  We mostly identify a joke by saying that there exists A and B being conflict.
 *)
 Module Joke.
+  Module Default.
+    Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
+  End Default.
   (* 
   NOTE: how can we ensure that `joke` function should be a method under `T`?
   Class Joke (A : Prop) (T : Type) {
@@ -144,6 +134,23 @@ Module Joke.
   Module LogicalError.
   End LogicalError.
 End Joke.
+
+(* Predicate. Show someone has said something in the sentence. Parameters:
+- the expression to contain
+- the whole expression 
+Since it's too complicated to actually do the searching, I want to just leave it as a parameter
+*)
+Parameter contains : expr -> expr -> Prop.
+
+(* ******************************** *)
+(* Unused, Unstable, WIP *)
+(* ******************************** *)
+
+(* TODO(important): 
+- Define a predicate `reflect` to lift a type of joke to 
+  another type of joke. Reflection is such a special sauce in showing the beauty
+  of the jokes. 
+- Clarify the relation between joke goals and the reflection operation.*)
 
 (* UNUSED. Predicate. For ambiguity on a single word 
 - A: the sentence to be interpreted

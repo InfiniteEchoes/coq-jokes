@@ -1,5 +1,7 @@
 Require Import CoqJokes.CoqJokes.
 
+Import CoqJokes.Joke.Default.
+
 (* NOTE:
 ARCHITECTURE.
 Currently I design the following architecture for each jokes:
@@ -337,6 +339,7 @@ Module Joke_3.
     Parameter in_museum : expr -> Prop.
     Parameter contains_string : string -> expr -> Prop.
     Parameter summarize : sentence -> sentence -> sentence.
+    Parameter is_normal : string -> Prop.
   End Predicates.
 
   (* 
@@ -380,12 +383,19 @@ Module Joke_3.
               (Adj (Adj (Plain "next to") (Plain "skeleton of Vasily Chapayev")) (Plain "small skeleton") ))).
     
     Parameter contains_skeleton_is_skeleton : forall (person : string) (e : expr),
-      contains_string "skeleton"%string expr -> is_skeleton person expr.
+      contains_string "skeleton"%string e -> is_skeleton person e.
 
     Parameter contains_next_to_in_museum : forall (e1 e2 : expr) (i1 i2 : expr),
       contains (Is (Plain "in museum") i1) e1
-      /\ contains (Adj (Plain "next to" i1) i2) ->
+      /\ contains (Adj (Plain "next to") i1) i2 ->
       in_museum i2.
+
+    (* NOTE: thoughts on defining abnormal identity:
+    - identity has property A
+    - identity has property ~A
+    *)
+    (* TODO: for museum. Should try to redefine based on abnormal identity framework *)
+    Parameter contains_joke_imples_abnormal : Prop.
   End Assumptions.
   
   (* 
@@ -397,8 +407,16 @@ Module Joke_3.
   *)
   Module Joke_proof.
 
-    Theorem skeletons_are_not_same : ~ 
-    ("skeleton of Vasily Chapayev"%string = "small skeleton next to him"%string).
+    Theorem skeletons_are_not_same : Prop. Admitted. 
+    (* ~ ("skeleton of Vasily Chapayev"%string = "small skeleton next to him"%string).
+    Admitted. *)
+
+    Theorem museum_contains_joke : Prop. Admitted.
+
+    Theorem museum_is_abnormal : Prop. Admitted.
+
+    Theorem abnormal_identity_is_a_joke :
+      exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
     Admitted.
 
   End Joke_proof.
