@@ -7,3 +7,4 @@ For entertainment, not for competitions.
 - Whatever shouldn't be formalized, will be formalized.
 - Don't solve the problems. Ask the questions.
 - Don't vibe coding. Vibe proving.
+- Unfinished parts are left as exercises in courses.

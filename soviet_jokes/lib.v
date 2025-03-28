@@ -195,7 +195,17 @@ End Joke_1.
 
 Module Joke_2.
   Module Predicates.
+    Inductive Event : Set :=
+      | C : expr -> Event
+      .
+    (* Parameters:
+    - the person being sentenced
+    - the behavior
+    *)
+    Parameter is_sentenced : string -> expr -> Prop.
+    Parameter is_forbidden : expr -> Prop.
     Parameter is_telling_joke : string -> Prop.
+    Parameter event_exists : Event -> Prop.
     Parameter summarize : sentence -> sentence -> sentence.
   End Predicates.
 
@@ -220,23 +230,35 @@ Module Joke_2.
   End Dialogue.
 
   Module Assumptions.
-    (* TODO: write the following assumptions:
-    - [summarize]there exists someone being sentenced 15 yrs by telling a joke. need to provide 3 steps:
+    (* TODO: 
+    - Clarify the difference between existence a description and the actual event, causing huge 
+      ambiguity in the procedure of proving
+    - Write the following assumptions:
+    - [summarize]there exists someone being sentenced 15 yrs by telling a joke. need to provide steps:
       - the plain description
-      - its formalized description
       - an axiom to translate the former to the latter
-    - [Assumption]if someone is being sentenced, there exists law forbidding something
-    - [Assumption]if law forbids something, that something exists
     - [Assumption]but something is a joke that should not exist
     - conclusion : unexpected joke exists is the actual joke
     *)
+    (* We will ignore the ambiguity that existence of such behavior conflicts 
+    with the existence of such description... *)
     Definition behavior_description := Plain "anecdote".
 
+    (* There exists someone being sentenced 15 yrs by telling a joke *)
     Definition description_f : exists (person : string), is_telling_joke person.
 
     (* NOTE: Maybe we will feed in the summarized sentence into this axiom *)
     Parameter description_translation : forall (d : sentence),
       contains behavior_description d -> description f (talker_of d).
+
+    Parameter sentenced_means_law_forbids : forall (person : string) (behavior),
+      is_sentenced person behavior -> is_forbidden behavior.
+
+    (* TODO: If law forbids something, that something exists(is expected) *)
+    Parameter law_forbids_means_exists : Prop.
+
+    (* TODO: If joke for something exists, that something is unexpected *)
+    Parameter joke_exists_means_not_exist : Prop.
 
   End Assumptions.
 
@@ -249,6 +271,9 @@ Module Joke_2.
   - there exists event happening that is so unexpected
   *)
   Module Joke_proof.
+    (* TODO: from joke's def, such behavior shouldn't exist since it is unexpected *)
+    Theorem joke_behavior_should_not_exist : Prop. Admitted.
+
   End Joke_proof.
 End Joke_2.
 
