@@ -198,8 +198,9 @@ End Joke_1.
 Module Joke_2.
   Module Predicates.
     Inductive Event : Set :=
-      | C : expr -> Event
+      | MkEvent : expr -> Event
       .
+
     (* Parameters:
     - the person being sentenced
     - the behavior
@@ -208,7 +209,7 @@ Module Joke_2.
     Parameter is_sentenced : string -> expr -> Prop.
     Parameter is_forbidden : expr -> Prop.
     Parameter is_telling_joke : string -> Prop.
-    Parameter is_joke : Event -> Prop.
+    Parameter is_joke_event : Event -> Prop.
     Parameter is_expected : Event -> Prop.
   End Predicates.
 
@@ -235,17 +236,23 @@ Module Joke_2.
   Module Assumptions.
     Import Predicates.
 
-    Definition behavior_description := Plain "anecdote".
+    Definition joke_behavior := Plain "anecdote".
+
+    (* (Ignore Computation)2nd sentence contains anedote *)
+    Parameter d_2_contains_joke_behavior : contains Assumptions.joke_behavior (expr_of Dialogue.d_2).
+
+    (* (Ignore Computation)2nd sentence mentioned a guy as the subject *)
+    Parameter d_2_contains_a_guy : contains (Plain "a guy") (expr_of Dialogue.d_2).
 
     (* (Ignore Computation)We ignore the complicated and tedious reasonings of summarize what
       A has said *)
-    Parameter summarize_sentence : summarize d_2 d_4 = 
+    Parameter summarize_sentence : summarize Dialogue.d_2 Dialogue.d_4 = 
       Say "A" (Plain "gave a guy 15 years for the most ridiculous anecdote of my life").
 
     Parameter analyze_meaning : forall (d : sentence), 
-      contains "a guy" (expr_of d) /\ contains behavior_description (expr_of d) 
-      -> is_sentenced "a guy" behavior_description 
-      /\ is_joke (Event.C behavior_description).
+      contains (Plain "a guy") (expr_of d) /\ contains joke_behavior (expr_of d) 
+      -> is_sentenced "a guy"%string joke_behavior 
+      /\ is_joke_event (MkEvent joke_behavior).
 
     (* If someont sentenced a person for a behavior, that behavior is forbidden by law *)
     Parameter sentenced_means_law_forbids : forall (person : string) (description : expr),
@@ -253,13 +260,14 @@ Module Joke_2.
 
     (* If law forbids something, that something is expected *)
     Parameter law_forbids_means_exists : forall (description : expr), 
-      is_forbidden description -> is_expected (Event.C description).
+      is_forbidden description -> is_expected (MkEvent description).
 
     (* If an event is a joke, that event is unexpected *)
-    Parameter joke_event_is_unexpected : forall (e : Event), is_joke e -> ~ is_expected e.
+    Parameter joke_event_is_unexpected : forall (e : Event), is_joke_event e -> ~ is_expected e.
 
     (* If an event is being sentenced, that event is expected *)
-    Parameter sentenced_event_is_expected : forall (e : Event), is_forbedden e -> is_expected e.
+    Parameter sentenced_event_is_expected : forall (behavior : expr), 
+      is_forbidden behavior -> is_expected (MkEvent behavior).
   End Assumptions.
 
   (* NOTE: 
@@ -274,17 +282,29 @@ Module Joke_2.
   8. [6, 7] there exists an expected event that is unexpected, henced the joke
   *)
   Module Joke_proof.
-    (* TODO: from joke's def, such event is unexpected *)
-    Theorem joke_event_not_exist : Prop. Admitted.
+    Import Predicates.
+    (* From joke's def, such event is unexpected *)
+    Theorem joke_event_not_expected : ~ is_expected (MkEvent Assumptions.joke_behavior).
+    Proof.
+      apply Assumptions.joke_event_is_unexpected.
+      pose proof (Assumptions.analyze_meaning Dialogue.d_2) as analyze_meaning.
+      destruct analyze_meaning.
+      split.
+      - apply Assumptions.d_2_contains_a_guy.
+      - apply Assumptions.d_2_contains_joke_behavior.
+      - exact H0.
+    Qed.
 
     (* TODO: from law's def, such event has already been expected *)
-    Theorem forbidden_even_exist : Prop. Admitted.
-
-    (* TODO:  *)
-    Theorem unexpected_event_is_a_joke :
-      exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
+    Theorem forbidden_even_expected : is_expected (MkEvent Assumptions.joke_behavior).
+    Proof.
     Admitted.
 
+    (* TODO: eventually we prove an unexpected event being expected is unexpected *)
+    Theorem unexpected_event_is_a_joke :
+      exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
+    Proof.
+    Admitted.
   End Joke_proof.
 End Joke_2.
 

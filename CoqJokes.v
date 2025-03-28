@@ -95,14 +95,19 @@ Module Joke.
   (* Jokes from unexpected events: uncommon behaviors happened *)
   Module UnexpectedEvent.
     Module Predicates.
+      Inductive Event :=
+      | MkEvent : expr -> Prop
+      .
+
       Parameter is_event : Prop.
-      Parameter event_exists : Prop.
+      Parameter is_expected : Prop.
     End Predicates.
 
     Module Assumptions.
     End Assumptions.
 
     Module JokeProof.
+      (* TODO: is_expected -> is_unexpected -> Prop *)
       Parameter event_is_joke : Prop.
     End JokeProof.
   End UnexpectedEvent.
