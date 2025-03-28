@@ -1,7 +1,7 @@
 # Coq Jokes
 Best jokes in the world, formally verified.
 
-For entertainment, not for competitions.
+For entertainments only, not for competitions.
 
 ## Features
 - Whatever shouldn't be formalized, will be formalized.

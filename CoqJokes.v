@@ -72,13 +72,15 @@ Inductive sentence : Set :=
 - the expression that he says
 *)
 | Say : string -> expr -> sentence
+
+(* Of course we could have narratives.
+- just the expression that he says
+*)
+| Narrate : expr -> sentence
 .
 
 (* Predicate. A and B confilcts, therefore this story is a joke. *)
 Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
-
-(* TODO: refactor code and delete this *)
-Parameter is : expr -> expr -> expr.
 
 (* Predicate. Show someone has said something in the sentence. Parameters:
 - the expression to contain
@@ -114,7 +116,7 @@ Module Joke.
   Module UnexpectedEvent.
     Module Predicates.
       Inductive Event :=
-      | MkEvent : expr -> Prop
+      | MkEvent : expr -> Event
       .
 
       Parameter is_event : Prop.

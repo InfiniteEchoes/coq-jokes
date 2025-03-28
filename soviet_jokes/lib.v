@@ -64,7 +64,7 @@ Module Joke_1.
       (Follow
         (Answer "B" "A" (Adj (Plain "communist") (Plain "hell")))
         (Say "B"
-          (is (Adj (Plain "communist") (Plain "hell")) 
+          (Is (Adj (Plain "communist") (Plain "hell")) 
               (Or (Plain "don't have fuel")
                 (Or (Plain "don't have enough pots for everyone")
                     (Plain "all devils are drunk")))))).
@@ -197,6 +197,7 @@ End Joke_1.
 
 Module Joke_2.
   Module Predicates.
+    (* TODO: delete this in future *)
     Inductive Event : Set :=
       | MkEvent : expr -> Event
       .
@@ -249,6 +250,9 @@ Module Joke_2.
     Parameter summarize_sentence : summarize Dialogue.d_2 Dialogue.d_4 = 
       Say "A" (Plain "gave a guy 15 years for the most ridiculous anecdote of my life").
 
+    (* WARNING: summarize_sentence is unused and we bypassed it. Should think of a better way to use it
+    in the future *)
+
     Parameter analyze_meaning : forall (d : sentence), 
       contains (Plain "a guy") (expr_of d) /\ contains joke_behavior (expr_of d) 
       -> is_sentenced "a guy"%string joke_behavior 
@@ -279,6 +283,9 @@ Module Joke_2.
   6. [assumption] if an event is forbidden, that event is expected 
   7. [2, 6] the content of the joke is expected
   8. [6, 7] there exists an expected event that is unexpected, henced the joke
+
+  Critics: The proof below seems to be complete, but we didn't use summarization at all.
+           We would need to reorganize and write a much better proof in the future.
   *)
   Module Joke_proof.
     Import Predicates.
@@ -319,35 +326,85 @@ Module Joke_2.
   End Joke_proof.
 End Joke_2.
 
-(* 
-In the museum of Vasily Chapayev the guide shows the visitors a skeleton:
-"And here you can see the skeleton of Vasily Chapayev."
-"And what is this small skeleton next to him?"
-"That's Vasily Chapayev in his childhood."
-Draft for the proof(abnormal identity):
-- one person could have only one skeleton
-- for exhibition and bluffing purpose, Vasily got 2x in the museum
-- Museum has done wrong on Vasily
-- Museum being abnormal, hence the joke
-*)
 Module Joke_3.
   Module Predicates.
+    (* Something is a skeleton for someone. Parameters:
+    - the person's name
+    - the identifier for the item
+    *)
+    Parameter is_skeleton : string -> string -> Prop.
+    Parameter summarize : sentence -> sentence -> sentence.
   End Predicates.
 
+  (* 
+  In the museum of Vasily Chapayev the guide shows the visitors a skeleton:
+  "And here you can see the skeleton of Vasily Chapayev."
+  "And what is this small skeleton next to him?"
+  "That's Vasily Chapayev in his childhood."
+  *)
   Module Dialogue.
-    (* TODO: maybe add Narration as a source of sentences? *)
+    Definition d_1 := Narrate 
+      (Adj (Plain "in the museum of Vasily Chapayev")
+        (Plain "the guide shows the visitors a skeleton")).
 
-    Definition d_1 := Say "Guide" (Plain "you can see the skeleton of Vasily Chapayev").
+    Definition d_2 := Say "Guide" (Plain "you can see the skeleton of Vasily Chapayev").
 
-    Definition d_2 := Ask "Visitor" "Guide" (Plain "small skeleton next to him").
+    Definition d_3 := Ask "Visitor" "Guide" (Plain "small skeleton next to him").
 
-    Definition d_3 := Answer "Guide" "Visitor" (Plain "Vasily Chapayev in his childhood").
+    Definition d_4 := Answer "Guide" "Visitor" (Plain "Vasily Chapayev in his childhood").
   End Dialogue.
 
+  (* 
+  Draft for basic idea:
+  - both skeletons are vasily's
+  - both skeletons are in museum
+  - museum is weird af
+  *)
   Module Assumptions.
+    Import Predicates.
+    (* What an amazing assumption to make! It looks like math isn't it *)
+    Parameter one_skeleton_for_one_person : forall (person : string) (s1 s2 : string),
+      is_skeleton person s1 -> (is_skeleton person s2) 
+      -> (s1 = s2).
+
+    Parameter summarize_guide : summarize Dialogue.d_2 (summarize Dialogue.d_3 Dialogue.d_4) = 
+      Say "Guide"%string
+        (And 
+          (Is (Plain "in museum") (Plain "skeleton of Vasily Chapayev"))
+          (Is (Plain "Vasily Chapayev in his childhood")
+              (Adj (Plain "small skeleton next to him") (Plain "skeleton of Vasily Chapayev")))).
+    
+    (* TODO: "small skeleton next to him" is also a skeleton of vasily:
+    if some expr contains Adj "...", that sentence contains the small skeleton *)
+
+    (* TODO: maybe a `Adj "in museum"` to predicate `in_museum` translation? *)
+
+    (* TODO: if expr contains "next_to", clarify the `next_to` relation *)
+
+    (* TODO: if something is next to something else, they are not identical and it
+      is also in museum *)
+
+    (* TODO: another thing to state is that they are both in museum
+    - if something is next to Vasily, and Vasily is in museum, then something is in museum
+    *)
+
+    (* TODO: unexpected thing in museum shows that museum itself is weird *)
   End Assumptions.
 
+  
+  (* 
+  Presumed draft for the proof(abnormal identity):
+  - one person could have only one skeleton
+  - for exhibition and bluffing purpose, Vasily got 2x skeleton in the museum
+  - Museum has done wrong on Vasily
+  - Museum being abnormal, hence the joke
+  *)
   Module Joke_proof.
+
+    Theorem skeletons_are_not_same : ~ 
+    ("skeleton of Vasily Chapayev"%string = "small skeleton next to him"%string).
+    Admitted.
+
   End Joke_proof.
 End Joke_3.
 
@@ -356,6 +413,7 @@ End Joke_3.
 Two soldiers on the North Pole:
 - wanna hear a political joke?
 - not really, afraid they’ll send me to some shithole then.
+
 Draft for proof(abnormal identity):
 - if someone shares about a political joke, both of the people will be discovered
   (as a simulation of "might be punished")
@@ -372,6 +430,8 @@ Draft for proof(abnormal identity):
 - "russia is worse than people that would nomally expect", hence the joke
 *)
 Module Joke_4.
+  Module Dialogue.
+  End Dialogue.
 End Joke_4.
 
 (* 

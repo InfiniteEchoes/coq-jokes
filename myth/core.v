@@ -23,3 +23,5 @@ Require Import CoqJokes.CoqJokes.
 - to live is to have soul
 - to have soul is to appreciate the beauty
 *)
+Module Core.
+End Core.
