@@ -1,20 +1,25 @@
 Require Import CoqJokes.CoqJokes.
 
-(* Goal: Soul is(?) the beauty between living and death
-- // Soul
-- [Definition] living with a soul is the eventual goal one person wants to pursuit
+(* 
+- // Goal
+- live comes with a determined reason
+  - without a determined reason there will be existential crisis
+- // Soul between life and death as determined reason
+- [Theorem]living with a soul is a determined reason and the eventual goal for people to pursue
+-        - neither total life nor total death is a permanent goal
+-        - permanent life means corpse
+-        - permanent death means nothing
 - // Death
-- [Theorem] death is beautiful
-- [Support] death means relief, and relief is the context of precence
-- [Support] death means convert
+- [Theorem]death is beautiful
+- [Support]death means (an incoming of) relief, and relief is the context of precence time
+- [Support]death means (an incoming of) convert
+-        - conversion from death is beautiful
+-        - conversion from death is common
 - // Life
-- [Theorem] life is beautiful
-- [Support] life means energetic, and energetic has to be observed from penetrative sounds
-- [Support] everyone admits life
-- // Between
-- [Theorem] neither total life nor total death is a permanent goal
-- [Support] permanent life means corpse
-- [Support] permanent death means nothing
+- [Theorem]life is beautiful
+- [Support]life means (an incoming of) energy
+-        - all penetrative events are energetic
 - // Conclusion
-- [Assumption] the final goal for ppl is appreciate the beauty between life and death
+- to live is to have soul
+- to have soul is to appreciate the beauty
 *)
