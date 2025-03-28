@@ -281,7 +281,6 @@ Module Joke_2.
       exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
     Admitted.
 
-
   End Joke_proof.
 End Joke_2.
 

@@ -80,13 +80,41 @@ NOTE: the following todo seems redundant, but it is raised from the proofs
 I have written and seems to be necessary. Sometimes we just have to conclude
 on one specific reason that looks pretty far from the dialogues.
 
-TODO(refactor code): Joke goals. Create a module to set up common goals to prove
-the legibility for a joke:
-- jokes from unexpected events: uncommon behaviors happened
-- jokes from abnormal identity: abnormal person, abnormal places or things, etc.
-- jokes from significant logical errors for a sentence
+TODO: refactor code and take off the `is_joke` function
 *)
 Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
+
+(* Common reasons to form a joke, along with tools to identify them *)
+Module Joke.
+  (* 
+  NOTE: how can we ensure that `joke` function should be a method under `T`?
+  Class Joke (A : Prop) (T : Type) {
+    joke : A -> ~A -> Prop;
+  }.
+  *)
+  (* Jokes from unexpected events: uncommon behaviors happened *)
+  Module UnexpectedEvent.
+    Module Predicates.
+      Parameter is_event : Prop.
+      Parameter event_exists : Prop.
+    End Predicates.
+
+    Module Assumptions.
+    End Assumptions.
+
+    Module JokeProof.
+      Parameter event_is_joke : Prop.
+    End JokeProof.
+  End UnexpectedEvent.
+
+  (* Jokes from abnormal identity: abnormal person, abnormal places or things, etc. *)
+  Module AbnormalPerson.
+  End AbnormalPerson.
+
+  (* Jokes from significant logical errors for a sentence *)
+  Module LogicalError.
+  End LogicalError.
+End Joke.
 
 (* TODO(important): 
 - Define a predicate `reflect` to lift a type of joke to 
