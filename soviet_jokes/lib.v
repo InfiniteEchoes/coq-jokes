@@ -330,9 +330,11 @@ Module Joke_3.
   Module Predicates.
     (* Something is a skeleton for someone. Parameters:
     - the person's name
-    - the identifier for the item
+    - the identifier expr
     *)
-    Parameter is_skeleton : string -> string -> Prop.
+    Parameter is_skeleton : string -> expr -> Prop.
+    Parameter in_museum : expr -> Prop.
+    Parameter contains_string : string -> expr -> Prop.
     Parameter summarize : sentence -> sentence -> sentence.
   End Predicates.
 
@@ -363,9 +365,9 @@ Module Joke_3.
   Module Assumptions.
     Import Predicates.
     (* What an amazing assumption to make! It looks like math isn't it *)
-    Parameter one_skeleton_for_one_person : forall (person : string) (s1 s2 : string),
-      is_skeleton person s1 -> (is_skeleton person s2) 
-      -> (s1 = s2).
+    Parameter one_skeleton_for_one_person : forall (person : string) (e1 e2 : expr),
+      is_skeleton person e1 -> (is_skeleton person e2) 
+      -> (e1 = e2).
 
     (* (Ignore computation)Summarize the punchline for this joke *)
     Parameter summarize_guide : summarize Dialogue.d_2 (summarize Dialogue.d_3 Dialogue.d_4) = 
@@ -373,25 +375,16 @@ Module Joke_3.
         (And 
           (Is (Plain "in museum") (Plain "skeleton of Vasily Chapayev"))
           (Is (Plain "Vasily Chapayev in his childhood")
-              (Adj (Plain "small skeleton next to him") (Plain "skeleton of Vasily Chapayev")))).
+              (Adj (Adj (Plain "next to") (Plain "skeleton of Vasily Chapayev")) (Plain "small skeleton") ))).
     
-    (* TODO: "small skeleton next to him" is also a skeleton of vasily:
-    if some expr contains Adj "...", that sentence contains the small skeleton *)
+    Parameter contains_skeleton_is_skeleton : forall (person : string) (e : expr),
+      contains_string "skeleton"%string expr -> is_skeleton person expr.
 
-    (* TODO: maybe a `Adj "in museum"` to predicate `in_museum` translation? *)
-
-    (* TODO: if expr contains "next_to", clarify the `next_to` relation *)
-
-    (* TODO: if something is next to something else, they are not identical and it
-      is also in museum *)
-
-    (* TODO: another thing to state is that they are both in museum
-    - if something is next to Vasily, and Vasily is in museum, then something is in museum
-    *)
-
-    (* TODO: unexpected thing in museum shows that museum itself is weird *)
+    Parameter contains_next_to_in_museum : forall (e1 e2 : expr) (i1 i2 : expr),
+      contains (Is (Plain "in museum") i1) e1
+      /\ contains (Adj (Plain "next to" i1) i2) ->
+      in_museum i2.
   End Assumptions.
-
   
   (* 
   Presumed draft for the proof(abnormal identity):
