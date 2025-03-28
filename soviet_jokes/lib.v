@@ -232,13 +232,10 @@ Module Joke_2.
 
   Module Assumptions.
     Import Predicates.
-    (* TODO:
-    - write an assumption that d2 & d4 summarizes into full meaning
-    - clarify that some sentence contains the description
-    - clarify `is_joke` parts since it's been never used
-    *)
     Definition behavior_description := Plain "anecdote".
 
+    (* (Ignore Computation)We ignore the complicated and tedious reasonings of summarize what
+      A has said *)
     Parameter summarize_sentence : summarize d_2 d_4 = 
       Say "A" (Plain "gave a guy 15 years for the most ridiculous anecdote of my life").
 
