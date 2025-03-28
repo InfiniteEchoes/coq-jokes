@@ -116,7 +116,7 @@ Module Joke_1.
       forall (p : string), Predicates.is_normal p.
   End Assumptions.
 
-  (* Presumed steps for the proof:
+  (* Presumed steps for the proof(abnormal identity):
   1.  [assumption] we assume that the description in sentence 2 means poor for simplicity
   2.  [assumption] we assume that if the poor description is in some sentence, that sentence
                    is making a choice. we want to prove someone is making an unexpected answer. 
@@ -270,13 +270,12 @@ Module Joke_2.
       is_forbidden description -> is_expected (MkEvent description).
   End Assumptions.
 
-  (* NOTE: 
-  Draft of the proof(unexpected event):
+  (* Presumed steps for the proof(unexpected event):
   1. [sentence 2] anon is telling a joke
   2. [sentence 4] anon has been sentenced 15 yrs
-  3. [summarize 1, 2] anon is sentenced heavily because of telling a joke
+  3. [summarize sentence 1, sentence 2] anon is sentenced heavily because of telling a joke
   4. [assumption] if an event is a joke, that event is unexpected
-  5. [1, 4] the content of joke is unexpected (TODO: expand further from joke to event)
+  5. [1, 4] the content of joke is unexpected 
   6. [assumption] if an event is forbidden, that event is expected 
   7. [2, 6] the content of the joke is expected
   8. [6, 7] there exists an expected event that is unexpected, henced the joke
@@ -308,7 +307,7 @@ Module Joke_2.
       - exact H.
       Qed.
 
-    (* TODO: eventually we prove an unexpected event being expected is unexpected *)
+    (* Eventually we prove an unexpected event being expected is unexpected *)
     Theorem unexpected_event_is_a_joke :
       exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
     Proof.

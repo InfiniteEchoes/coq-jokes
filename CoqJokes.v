@@ -113,8 +113,8 @@ Module Joke.
   End UnexpectedEvent.
 
   (* Jokes from abnormal identity: abnormal person, abnormal places or things, etc. *)
-  Module AbnormalPerson.
-  End AbnormalPerson.
+  Module AbnormalId.
+  End AbnormalId.
 
   (* Jokes from significant logical errors for a sentence *)
   Module LogicalError.
