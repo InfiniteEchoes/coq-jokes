@@ -207,6 +207,7 @@ Module Joke_2.
     - the behavior
     *)
     Parameter summarize : sentence -> sentence -> sentence.
+    (* TODO: in the future, substitute all `is_xx` predicates to `Is "xx" _` predicate *)
     Parameter is_sentenced : string -> expr -> Prop.
     Parameter is_forbidden : expr -> Prop.
     Parameter is_telling_joke : string -> Prop.
@@ -360,6 +361,7 @@ Module Joke_3.
   Draft for basic idea:
   - both skeletons are vasily's
   - both skeletons are in museum
+  - bonus: treat them as properties of museum
   - museum is weird af
   *)
   Module Assumptions.

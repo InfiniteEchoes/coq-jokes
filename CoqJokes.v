@@ -21,6 +21,8 @@ and etc., this project is a personal attempt mostly for entertainment.
 
 MID TERM TASKS.
 1. Set up a CI on git
+2. Setup a module of predicates, substitute all `is_xx` predicates to 
+   `Is "xx" _` predicate
 
 LONG TERM TASKS.
 1. More refined proofs. Don't just rely on plain texts
