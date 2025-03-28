@@ -25,6 +25,8 @@ TODO: add a `Language_extension` module?
 (* TODO:
 - Can we show that a proof has covered the essence for 
   a full dialogue?
+- Try to make a predicate to state clearly that we can ensure all 
+  infos are contained in a sentence
 *)
 
 (* ******************************** *)
@@ -232,6 +234,7 @@ Module Joke_2.
 
   Module Assumptions.
     Import Predicates.
+
     Definition behavior_description := Plain "anecdote".
 
     (* (Ignore Computation)We ignore the complicated and tedious reasonings of summarize what
@@ -241,7 +244,8 @@ Module Joke_2.
 
     Parameter analyze_meaning : forall (d : sentence), 
       contains "a guy" (expr_of d) /\ contains behavior_description (expr_of d) 
-      -> is_sentenced "a guy" description. (* TODO: clarify on is_joke part *)
+      -> is_sentenced "a guy" behavior_description 
+      /\ is_joke (Event.C behavior_description).
 
     (* If someont sentenced a person for a behavior, that behavior is forbidden by law *)
     Parameter sentenced_means_law_forbids : forall (person : string) (description : expr),
