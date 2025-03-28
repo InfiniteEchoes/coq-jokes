@@ -1,12 +1,6 @@
 (* ******************************** *)
-(* Project setups, general notes, etc *)
+(* Project setups, General notes, Etc *)
 (* ******************************** *)
-(* TODO: 
-- maybe set up a CI on git
-- (persistent)think of useful predicates and how to implement them
-- (future)make a distinguish between meta and object language
-*)
-
 (* NOTE: 
 INTRODUCTION.
 The biggest difference for informal logic to formal logic is that
@@ -24,12 +18,20 @@ framework, not refining the steps of proofs.
 Given the ambiguity of jokes, and the absence for so many contexts 
 that should appear in jokes, syntactic considerations for English, 
 and etc., this project is a personal attempt mostly for entertainment.
+
+MID TERM TASKS.
+1. Set up a CI on git
+
+LONG TERM TASKS.
+1. More refined proofs. Don't just rely on plain texts
+2. More useful predicates
+3. Distinguish between meta and object language
 *)
 
 Require Export Coq.Strings.String.
 
 (* ******************************** *)
-(* General predicates, theorems, tools *)
+(* Predicates, Theorems, Tools *)
 (* ******************************** *)
 
 (* Initial way to analyze the expressions *)

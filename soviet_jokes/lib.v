@@ -367,6 +367,7 @@ Module Joke_3.
       is_skeleton person s1 -> (is_skeleton person s2) 
       -> (s1 = s2).
 
+    (* (Ignore computation)Summarize the punchline for this joke *)
     Parameter summarize_guide : summarize Dialogue.d_2 (summarize Dialogue.d_3 Dialogue.d_4) = 
       Say "Guide"%string
         (And 
