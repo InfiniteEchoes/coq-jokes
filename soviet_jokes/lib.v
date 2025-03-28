@@ -266,8 +266,8 @@ Module Joke_2.
     Parameter joke_event_is_unexpected : forall (e : Event), is_joke_event e -> ~ is_expected e.
 
     (* If an event is being sentenced, that event is expected *)
-    Parameter sentenced_event_is_expected : forall (behavior : expr), 
-      is_forbidden behavior -> is_expected (MkEvent behavior).
+    Parameter sentenced_event_is_expected : forall (description : expr), 
+      is_forbidden description -> is_expected (MkEvent description).
   End Assumptions.
 
   (* NOTE: 
@@ -295,16 +295,28 @@ Module Joke_2.
       - exact H0.
     Qed.
 
-    (* TODO: from law's def, such event has already been expected *)
-    Theorem forbidden_even_expected : is_expected (MkEvent Assumptions.joke_behavior).
+    (* From law's def, such event has already been expected *)
+    Theorem forbidden_event_expected : is_expected (MkEvent Assumptions.joke_behavior).
     Proof.
-    Admitted.
+      apply Assumptions.sentenced_event_is_expected.
+      apply (Assumptions.sentenced_means_law_forbids "a guy").
+      pose proof (Assumptions.analyze_meaning Dialogue.d_2) as analyze_meaning.
+      destruct analyze_meaning.
+      split.
+      - apply Assumptions.d_2_contains_a_guy.
+      - apply Assumptions.d_2_contains_joke_behavior.
+      - exact H.
+      Qed.
 
     (* TODO: eventually we prove an unexpected event being expected is unexpected *)
     Theorem unexpected_event_is_a_joke :
       exists (A : Prop) (a : A) (neg_a : ~A), is_joke A a neg_a.
     Proof.
-    Admitted.
+      exists (is_expected (MkEvent Assumptions.joke_behavior)).
+      exists forbidden_event_expected.
+      destruct joke_event_not_expected.
+      apply forbidden_event_expected.
+    Qed.
   End Joke_proof.
 End Joke_2.
 
