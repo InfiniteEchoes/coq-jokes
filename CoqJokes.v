@@ -1,5 +1,5 @@
 (* ******************************** *)
-(* Project setups, general notes and etc *)
+(* Project setups, general notes, etc *)
 (* ******************************** *)
 (* TODO: 
 - maybe set up a CI on git
@@ -75,16 +75,34 @@ Inductive sentence : Set :=
 .
 
 (* Predicate. A and B confilcts, therefore this story is a joke. *)
-(* 
-NOTE: the following todo seems redundant, but it is raised from the proofs 
-I have written and seems to be necessary. Sometimes we just have to conclude
-on one specific reason that looks pretty far from the dialogues.
-
-TODO: refactor code and take off the `is_joke` function
-*)
 Definition is_joke (A : Prop) : A -> ~A -> Prop. Admitted.
 
-(* Common reasons to form a joke, along with tools to identify them *)
+(* TODO: refactor code and delete this *)
+Parameter is : expr -> expr -> expr.
+
+(* Predicate. Show someone has said something in the sentence. Parameters:
+- the expression to contain
+- the whole expression 
+Since it's too complicated to actually do the searching, I want to just leave it as a parameter
+*)
+Parameter contains : expr -> expr -> Prop.
+
+(* ******************************** *)
+(* Unused, Unstable, WIP *)
+(* ******************************** *)
+
+(* TODO(important): 
+- Define a predicate `reflect` to lift a type of joke to 
+  another type of joke. Reflection is such a special sauce in showing the beauty
+  of the jokes. 
+- Clarify the relation between joke goals and the reflection operation.*)
+
+(* WIP: Common reasons to form a joke, along with tools to identify them 
+  NOTE: The following work seems redundant, but it is raised from the proofs 
+  I have written and seems to be necessary. Sometimes we just have to conclude
+  on one specific reason that looks pretty far from the dialogues.
+  TODO: refactor code and take off the `is_joke` function
+*)
 Module Joke.
   (* 
   NOTE: how can we ensure that `joke` function should be a method under `T`?
@@ -120,24 +138,6 @@ Module Joke.
   Module LogicalError.
   End LogicalError.
 End Joke.
-
-(* TODO(important): 
-- Define a predicate `reflect` to lift a type of joke to 
-  another type of joke. Reflection is such a special sauce in showing the beauty
-  of the jokes. 
-- Clarify the relation between joke goals and the reflection operation.*)
-
-(* TODO: refactor code and delete this *)
-Parameter is : expr -> expr -> expr.
-
-(* Predicate. Show someone has said something in the sentence. Parameters:
-- the expression to contain
-- the whole expression 
-Since it's too complicated to actually do the searching, I want to just leave it as a parameter
-*)
-Parameter contains : expr -> expr -> Prop.
-
-(* ********Unused/wip stuffs******** *)
 
 (* UNUSED. Predicate. For ambiguity on a single word 
 - A: the sentence to be interpreted

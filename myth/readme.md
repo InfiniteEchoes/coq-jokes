@@ -1,5 +1,5 @@
-`Myth` is intended to formally verify something else.
+Demented. Deranged. Frantic. Lunatic. Hysteric. `Myth` is intended to formally verify something soft.
 
-Everyone knows that we can mean whatever when we say anything due to the ambiguity of natural languages.
+Everyone knows that we can mean whatever for anything we say due to the ambiguity of natural languages.
 
-`Myth` records some softest of the softests and tries verifying them for a determined meaning.
+`Myth` catches the softest of the softests and attempts to verify them for a determined meaning.
