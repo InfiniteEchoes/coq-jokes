@@ -1,7 +1,7 @@
 (* ******************************** *)
 (* Project setups, general notes and etc *)
 (* ******************************** *)
-(* TODO:
+(* TODO: 
 - maybe set up a CI on git
 - (persistent)think of useful predicates and how to implement them
 - (future)make a distinguish between meta and object language
