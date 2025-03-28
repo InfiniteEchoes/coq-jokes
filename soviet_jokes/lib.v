@@ -335,6 +335,13 @@ Module Joke_3.
   End Predicates.
 
   Module Dialogue.
+    (* TODO: maybe add Narration as a source of sentences? *)
+
+    Definition d_1 := Say "Guide" (Plain "you can see the skeleton of Vasily Chapayev").
+
+    Definition d_2 := Ask "Visitor" "Guide" (Plain "small skeleton next to him").
+
+    Definition d_3 := Answer "Guide" "Visitor" (Plain "Vasily Chapayev in his childhood").
   End Dialogue.
 
   Module Assumptions.
@@ -364,6 +371,8 @@ Draft for proof(abnormal identity):
 - syberia being worse than north pole reflects a Russia being worse than any people normally expect
 - "russia is worse than people that would nomally expect", hence the joke
 *)
+Module Joke_4.
+End Joke_4.
 
 (* 
 Andropov then head of KGB comes to see dying Brezhnev.
