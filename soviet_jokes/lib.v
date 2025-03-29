@@ -340,6 +340,7 @@ Module Joke_3.
     Parameter contains_string : string -> expr -> Prop.
     Parameter summarize : sentence -> sentence -> sentence.
     Parameter is_normal : string -> Prop.
+    Parameter has_property : string -> expr -> Prop.
   End Predicates.
 
   (* 
@@ -394,6 +395,10 @@ Module Joke_3.
     - identity has property A
     - identity has property ~A
     *)
+    (* TODO: Show that museum:
+    - has normal assumption on skeleton
+    - has abnormal fact on skeleton
+    *)
     (* TODO: for museum. Should try to redefine based on abnormal identity framework *)
     Parameter contains_joke_imples_abnormal : Prop.
   End Assumptions.
@@ -445,6 +450,11 @@ Draft for proof(abnormal identity):
 *)
 Module Joke_4.
   Module Dialogue.
+    Definition d_1 := Ask "A" "B" (Plain "hear a political joke").
+
+    Definition d_2 := Answer "B" "A"
+    (Follow (Plain "no")
+            (Plain "afraid they’ll send me to some shithole")).
   End Dialogue.
 End Joke_4.
 

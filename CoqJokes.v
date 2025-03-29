@@ -27,7 +27,9 @@ and etc., this project is a personal attempt mostly for entertainment.
 MID TERM TASKS.
 1. Set up a CI on git
 2. Set up a module of predicates, substitute all `is_xx` predicates 
-   to `Is "xx" _` predicate
+   to `Is "xx" _` predicate (Is it possible?)
+3. Set up a new envorinment to see if we can also use OCaml to prove 
+   the same stuffs
 
 LONG TERM TASKS.
 1. More refined proofs. Don't just rely on plain texts
