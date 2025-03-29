@@ -28,14 +28,13 @@ MID TERM TASKS.
 1. Set up a CI on git
 2. Set up a module of predicates, substitute all `is_xx` predicates 
    to `Is "xx" _` predicate (Is it possible?)
-3. Set up a new envorinment to see if we can also use OCaml to prove 
-   the same stuffs
 
 LONG TERM TASKS.
 1. More refined proofs. Don't just rely on plain texts
 2. More useful predicates
 3. Distinguish between meta and object language
 4. Refactor completed proofs whenever architecture update happens
+5. Make a OCaml version for some of the proofs
 *)
 
 Require Export Coq.Strings.String.
