@@ -2,7 +2,7 @@ Require Import CoqJokes.CoqJokes.
 
 (* 
 - // Goal
-- live comes with a determined reason
+- life comes with a determined reason
   - without a determined reason there will be existential crisis
 - // Soul between life and death as determined reason
 - [Theorem]living with a soul is a determined reason and the eventual goal for people to pursue
@@ -24,4 +24,24 @@ Require Import CoqJokes.CoqJokes.
 - to have soul is to appreciate the beauty
 *)
 Module Core.
+  Parameter Life : Set.
+
+  Parameter Soul : Set.
+
+  Parameter Live : Prop.
+  Parameter Death : Prop.
+
+  Parameter between : Live -> Death -> Prop.
+
+  Parameter is_beautiful : Type -> Prop.
+
+  (* unsatisfyiing *)
+  Parameter is_determined : Set -> Prop.
+
+  Parameter Goal : forall (life : Life), exists (reason : Prop), is_determined life reason.
+
+  Parameter death_is_beautiful : forall (death : Death), is_beautiful death.
+
+  Parameter live_is_beautiful : forall (live : Live), is_beautiful live.
+
 End Core.
