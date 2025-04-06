@@ -1,7 +1,7 @@
 Require Import CoqJokes.CoqJokes.
 
 (* 
-- // Goal
+- // Goal: What is living
 - Living comes with a determined reason
   - without a determined reason there will be existential crisis
 - // Soul between life and death as determined reason
@@ -33,6 +33,7 @@ Module Core.
   .
 
 
+  (* TODO: define a `with` predicate to simulate an adjective "with" a noun *)
   Parameter is_beautiful : Type -> Prop.
 
   (* unsatisfyiing *)
@@ -45,3 +46,13 @@ Module Core.
   Parameter live_is_beautiful : forall (live : Live), is_beautiful live.
 
 End Core.
+
+(* // Beauty
+- Beauty is the absolute harmony of confirmation
+- absolute harmony means the following component's total confirm:
+  - mind
+  - instinct
+  - mood
+  - anything else that I don't know
+// TODO: use this 4 components to define `is_beautiful` or `with beauty`
+*)

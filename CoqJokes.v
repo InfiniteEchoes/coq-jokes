@@ -26,7 +26,8 @@ and etc., this project is a personal attempt mostly for entertainment.
 
 MID TERM TASKS.
 1. Set up a CI on git
-2. Set up a module of predicates, substitute all `is_xx` predicates 
+2. Finish defining `contains` function
+3. Set up a module of predicates, substitute all `is_xx` predicates 
    to `Is "xx" _` predicate (Is it possible?)
 
 LONG TERM TASKS.
