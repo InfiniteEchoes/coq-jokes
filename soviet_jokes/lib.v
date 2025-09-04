@@ -382,14 +382,38 @@ Module Joke_3.
           (Is (Plain "in museum") (Plain "skeleton of Vasily Chapayev"))
           (Is (Plain "Vasily Chapayev in his childhood")
               (Adj (Adj (Plain "next to") (Plain "skeleton of Vasily Chapayev")) (Plain "small skeleton") ))).
+
+    (* NOTE: these assumptions are annoying to make. I just don't want to write the `contains` function... *)
+    (* (Ignore computation)Assume that summarized content have skeletons. *)
+    Parameter guide_contains_skeleton : contains_string "skeleton"%string
+      (Is (Plain "in museum") (Plain "skeleton of Vasily Chapayev")).
+
+    (* (Ignore computation)Same as above. *)
+    Parameter guide_contains_other_skeleton : contains_string "skeleton"%string
+    (Is (Plain "Vasily Chapayev in his childhood")
+      (Adj (Adj (Plain "next to") (Plain "skeleton of Vasily Chapayev")) (Plain "small skeleton"))).
+
+    (* (Ignore computation)summarized content mentioned museum. *)
+    Parameter guide_in_museum : contains (Is (Plain "in museum") i) (Is (Plain "in museum") (Plain "skeleton of Vasily Chapayev")).
     
+    (* Identify a person's skeleton. *)
     Parameter contains_skeleton_is_skeleton : forall (person : string) (e : expr),
       contains_string "skeleton"%string e -> is_skeleton person e.
 
+    (* Identify "in_museum". *)
+    Parameter in_museum : forall (e : expr) (i : expr),
+      contains (Is (Plain "in museum") i) e -> in_museum i.
+
+    (* Identify "in_museum". If something is next to another thing in museum, that 
+      thing should be in museum as well *)
     Parameter contains_next_to_in_museum : forall (e1 e2 : expr) (i1 i2 : expr),
       contains (Is (Plain "in museum") i1) e1
       /\ contains (Adj (Plain "next to") i1) i2 ->
       in_museum i2.
+
+    (* TODO:
+    - Make some default properties from common sense that museum should already hold
+    *)
 
     (* NOTE: thoughts on defining abnormal identity:
     - identity has property A
@@ -399,7 +423,6 @@ Module Joke_3.
     - has normal assumption on skeleton
     - has abnormal fact on skeleton
     *)
-    (* TODO: for museum. Should try to redefine based on abnormal identity framework *)
     Parameter contains_joke_imples_abnormal : Prop.
   End Assumptions.
   

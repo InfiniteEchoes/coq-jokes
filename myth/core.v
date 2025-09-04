@@ -24,22 +24,35 @@ Require Import CoqJokes.CoqJokes.
 - to have soul is to appreciate the beauty
 *)
 Module Core.
-  Inductive Item :=
-  | Living
-  | Life
-  | Death
-  | Soul
-  | Between : Item -> Item -> Item
-  .
+  Definition _with (x : Set)
+    (pattern : Set -> Prop) 
+    (parameters : Set) : Prop :=
+    pattern parameters.
 
+  Parameter Between : Set -> Set -> Set.
 
-  (* TODO: define a `with` predicate to simulate an adjective "with" a noun *)
-  Parameter is_beautiful : Type -> Prop.
+  (* TODO: redesign so that living "comes with a reason" *)
+  Parameter Living : Set.
+  Parameter Life : Set.
+  Parameter Death : Set.
+  Parameter Soul : Set.
+  Parameter Beauty : Set.
+  Parameter Confirm : Set.
 
-  (* unsatisfyiing *)
-  Parameter is_determined : Set -> Prop.
+  (* TODO: resolve this *)
+  Definition is_beautiful := _with Beauty _.
+  Definition is_living := _with Living.
+  Definition is_determined := _with Confirm.
 
-  Parameter Goal : forall (life : Life), exists (reason : Prop), is_determined life reason.
+  (* Unsatisfying:
+  - the reason is unrelated to the person
+  - is_living takes ambiguous parameters
+  *)
+  Lemma living_comes_with_a_reason : forall (person : Set) (reason : Set),
+    is_determined reason -> is_living person.
+
+  Parameter goal : forall (life : Life), exists (reason : Prop), 
+    is_determined life reason.
 
   Parameter death_is_beautiful : forall (death : Death), is_beautiful death.
 
